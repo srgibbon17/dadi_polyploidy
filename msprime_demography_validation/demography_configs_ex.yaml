@@ -1,0 +1,24 @@
+model: allo_2epoch # specify the demographic model to use
+base_dir: allo_2epoch/ # be sure to include the trailing slash
+
+configs:
+  - name: params1
+    params: [.75, .3, 0.002] # nu_c, T_WGD, HE_rate for allo_2epoch
+    output_dir: params1 
+    seed: 42 # seed for the rng which then sets seeds for the ancestry and mutation simulations
+    replicates: 2 # number of replicate simulations to run 
+    ns: [20, 20] # number of haploids to sample from each subgenome
+
+  - name: params2
+    params: [.75, 3, 0.002]
+    output_dir: params2
+    seed: 42
+    replicates: 2
+    ns: [20, 20]
+    
+  - name: params3
+    params: [.75, 30, 0.002]
+    output_dir: params3
+    seed: 42
+    replicates: 2
+    ns: [20, 20]

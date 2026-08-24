@@ -1,0 +1,12 @@
+ploidyType: "allotetraploid"
+model: "two_epoch" # full model for uncertainties and LRT
+nested_model: "two_epoch_noHE" # nested model for uncertainties of nested inferences
+pts_l: [101, 111, 121] # grid points for numerical integration
+folded: True # boolean to indicate whether to fold the SFS
+collapsed_ids: [0,1] # list of dimensions to collapse in SFS
+eps_l: [0.1, 0.01, 0.001] # list of epsilons for derivative step size
+nested_indices: [2] # this sets H, the HE parameter, to be nested in this example
+weights: [0.5, 0.5] # weights for chi-square mixture distribution 
+true_params: [.3, .75, .02] # T, nu, H for this example
+
+    

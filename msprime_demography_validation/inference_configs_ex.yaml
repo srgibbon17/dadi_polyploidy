@@ -1,0 +1,25 @@
+# It is often convenient to run multiple inference configurations on 
+# the same input data (e.g. for nested inferences with a LRT as below)
+
+configs:
+  # Config 0: nested model with H=0
+  - name: "Nested model"
+    ploidyType: "allotetraploid"
+    model: "two_epoch"
+    initial_params: [1.5, 0.5, 0.01]
+    lower_bounds: [0.001, 0.001, 0]
+    upper_bounds: [10, 10, 30]
+    fixed_params: [null, null, 0]
+    output_dir: "inference_results/allo_2epoch/params1/Nested_model"
+    num_opts: 5 # total number of optimizations to run
+
+  # Config 1: full model with H allowed to vary
+  - name: "Full model"
+    ploidyType: "allotetraploid"
+    model: "two_epoch"
+    initial_params: [1.5, 0.5, 0.01]
+    lower_bounds: [0.001, 0.001, 0]
+    upper_bounds: [10, 10, 30]
+    fixed_params: null
+    output_dir: "inference_results/allo_2epoch/params1/Full_model"
+    num_opts: 5
