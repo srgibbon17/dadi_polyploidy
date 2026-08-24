@@ -1,0 +1,13 @@
+# Small-scale test configuration for generate_msprime_samples.py
+# Mirrors "params1" from demography_configs_ex.yaml (allo_2epoch), but with
+# replicates reduced/increased to the requested test scale.
+model: allo_2epoch
+base_dir: results/trees/
+
+configs:
+  - name: params1
+    params: [0.75, 0.3, 0.002] # nu_c, T_WGD, HE_rate for allo_2epoch
+    output_dir: params1
+    seed: 42
+    replicates: 10 # small-scale local test: 10 msprime replicates
+    ns: [20, 20]

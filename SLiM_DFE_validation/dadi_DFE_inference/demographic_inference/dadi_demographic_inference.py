@@ -166,32 +166,35 @@ def get_sfs_from_ts(ts_path, ns_list, n_reps, Q=5, mut_seed=123, sampling_seed=4
 
     # get the base path from the ts_path
     base_path = re.sub(r'_ID_\d+\.trees$', '', ts_path)
-    # use rep 1 to establish sample sets
-    ts0 = tskit.load(f"{base_path}_ID_1.trees")
-    # extract the nodes and populations from the ts
-    node_ids = ts0.individuals_nodes
-    pop_ids = ts0.individuals_population
-    # set up a reproducible rng for sampling
-    sample_rng = np.random.default_rng(sampling_seed+rep_id*100)
-    # build the sample set
-    samples_list = get_sample_sets(pop_ids, node_ids, ns_list_copy, paired_pops, sample_rng)
 
     sfs_ns = None
     sfs_syn = None
 
-    for rep_id in range(1, n_reps + 1):
-        path = f"{base_path}_ID_{rep_id}.trees"
+    for i in range(1, n_reps + 1):
+        path = f"{base_path}_ID_{i}.trees"
         ts = tskit.load(path)
+        # Sample sets must be rebuilt for *each* replicate: node ids are
+        # only meaningful within the tree sequence that produced them (each
+        # replicate is an independent SLiM run with its own node
+        # numbering), so a sample set built from one replicate's node ids
+        # is not valid for another replicate. Re-seeding sample_rng
+        # identically each iteration keeps the sampled *ranks* (and thus
+        # the effective sample size/behavior) reproducible across replicates.
+        node_ids = ts.individuals_nodes
+        pop_ids = ts.individuals_population
+        sample_rng = np.random.default_rng(sampling_seed + rep_id * 100)
+        samples_list = get_sample_sets(pop_ids, node_ids, ns_list_copy, paired_pops, sample_rng)
+
         nts = msprime.sim_mutations(ts, rate=(1/3.5)*Q*7e-9,
                                     model=msprime.SLiMMutationModel(type=3),
-                                    random_seed=mut_seeds[rep_id-1], keep=False)
+                                    random_seed=mut_seeds[i-1], keep=False)
 
         rep_ns  = ts.allele_frequency_spectrum(sample_sets=samples_list, polarised=True, span_normalise=False)
         rep_syn = nts.allele_frequency_spectrum(sample_sets=samples_list, polarised=True, span_normalise=False)
 
         sfs_ns  = rep_ns  if sfs_ns  is None else sfs_ns  + rep_ns
         sfs_syn = rep_syn if sfs_syn is None else sfs_syn + rep_syn
-        
+
         del ts, nts  # free memory before loading the next tree sequences
     # convert to a dadi Spectrum object and return
     return dadi.Spectrum(sfs_syn), dadi.Spectrum(sfs_ns)
@@ -231,29 +234,34 @@ def get_bootstrap_spectra(ts_path, ns_list, n_reps, num_windows, num_bootstraps,
 
     # get the base path from the ts_path
     base_path = re.sub(r'_ID_\d+\.trees$', '', ts_path)
-    # use rep 1 to establish sample sets
+    # sequence_length is the same across replicates (same simulated L), so
+    # any replicate's tree sequence can be used to set up the windows
     ts0 = tskit.load(f"{base_path}_ID_1.trees")
-    # extract the nodes and populations from the ts
-    node_ids = ts0.individuals_nodes
-    pop_ids = ts0.individuals_population
-    # set up a reproducible rng for sampling
-    sample_rng = np.random.default_rng(sampling_seed)
-    # build the sample set
-    samples_list = get_sample_sets(pop_ids, node_ids, ns_list_copy, paired_pops, sample_rng)
 
     # since we most often want many bootstraps, it is much more efficient to
     # calculate the SFS for each window once and then sample from those SFS
     windows = np.linspace(0, ts0.sequence_length, num_windows+1)
     windowed_spectra_ns = []
     windowed_spectra_syn = []
+    del ts0
 
     # calculate the windowed SFS
-    for rep_id in range(1, n_reps + 1):
-        path = f"{base_path}_ID_{rep_id}.trees"
+    for i in range(1, n_reps + 1):
+        path = f"{base_path}_ID_{i}.trees"
         ts = tskit.load(path)
+        # Sample sets must be rebuilt for *each* replicate: node ids are
+        # only meaningful within the tree sequence that produced them (see
+        # get_sfs_from_ts for details). Re-seeding sample_rng identically
+        # each iteration keeps the sampled ranks reproducible across
+        # replicates.
+        node_ids = ts.individuals_nodes
+        pop_ids = ts.individuals_population
+        sample_rng = np.random.default_rng(sampling_seed)
+        samples_list = get_sample_sets(pop_ids, node_ids, ns_list_copy, paired_pops, sample_rng)
+
         nts = msprime.sim_mutations(ts, rate=(1/3.5)*Q*7e-9,
                                     model=msprime.SLiMMutationModel(type=3),
-                                    random_seed=mut_seeds[rep_id-1], keep=False)
+                                    random_seed=mut_seeds[i-1], keep=False)
 
         # calculate the sfs for the non-synonymous mutations
         windowed_sfs_ns = ts.allele_frequency_spectrum(sample_sets=samples_list, polarised=True, span_normalise=False, windows=windows)
@@ -266,7 +274,10 @@ def get_bootstrap_spectra(ts_path, ns_list, n_reps, num_windows, num_bootstraps,
     # then, we can calculate the bootstrap SFS by sampling from the windowed SFS
     bootstrap_spectra_ns = []
     bootstrap_spectra_syn = []
-    rng = np.random.default_rng(window_seed + rep_id*100)
+    # note: matches the original (pre-fix) behavior, which seeded this rng
+    # using n_reps (via a loop variable that ended up holding that value)
+    # rather than the file's own REP number
+    rng = np.random.default_rng(window_seed + n_reps*100)
     # we want to sample randomly over all the windows from the whole genome
     # so, we sample num_windows*len(ts_list) windows
     total_windows = num_windows*n_reps

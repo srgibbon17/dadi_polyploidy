@@ -1,0 +1,27 @@
+# Snakemake-level configuration for the SLiM -> dadi single-population
+# autotetraploid bottlegrowth + gamma DFE validation pipeline (no diploid
+# progenitor, no joint/mixture DFE -- contrast with
+# ../../SLiM_DFE_validation/). Same small-scale local test parameters as the
+# joint-DFE workflow: Q=100, L=1e5, 10 sims (ID=1..10) at REP=1, so the
+# total simulated genome length is 10 * 1e5 = 1e6.
+Q: 100
+L: 100000 # 1e5
+BURNIN: 20
+REP: 1
+SEED: 12321
+NU1: 0.3 # initial (post-WGD) tetraploid size, relative to ancestral diploid
+NU2: 0.7 # contemporary tetraploid size, relative to ancestral diploid
+TIME: 0.3 # time since WGD, in units of 2*Na generations
+num_sims: 10 # ID = 1..num_sims
+
+# dadi_cache_generation.py settings (1D cache only, since the DFE here is a
+# plain gamma distribution, not a joint/mixture model -- no 2D cache needed).
+# gamma_pts=5 (the script's speed-oriented default) turned out too coarse to
+# resolve the gamma-DFE likelihood surface for this test's data (it produced
+# a spurious monotonic runaway toward huge scale values instead of the
+# well-behaved unimodal peak that gamma_pts=30 recovers); 30 still only
+# takes ~10s for this single-population 1D cache, so there's no reason to
+# use fewer points here.
+cache_gamma_bounds: [0.0001, 2000]
+cache_gamma_pts: 30
+cache_cpus: 4

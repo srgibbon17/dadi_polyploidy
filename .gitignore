@@ -1,2 +1,9 @@
 *.DS_Store
 *.bpkl
+
+# Snakemake workflow test/run outputs (workflows/msprime_demography_validation, workflows/SLiM_DFE_validation)
+workflows/*/results/
+*.trees
+*.sfs
+.snakemake/
+__pycache__/

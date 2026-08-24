@@ -1,0 +1,25 @@
+# Small-scale test configuration for dadi_demographic_inference.py
+# (plain autotetraploid bottlegrowth, no diploid progenitor). The SLiM model
+# records the tetraploid's two "genome-storage" halves as populations 2 and
+# 3 (p1, the diploid ancestor, is killed off after the WGD and has no
+# individuals left in the final tree sequence); paired_pops pairs them by
+# individual rank, and collapsed_ids merges them into the single population
+# dimension the plain `bottlegrowth` model expects.
+configs:
+  - name: "bottlegrowth_autotetraploid_only_test"
+    ploidyType: "autotetraploid"
+    model: "bottlegrowth" # single-population autotetraploid model (no _w_dips)
+    initial_params: [0.3, 0.3, 0.7] # T_WGD, nuWGD, nuF
+    lower_bounds: [0.001, 0.01, 0.01]
+    upper_bounds: [10, 10, 10]
+    fixed_params: null
+    pts_l: [181, 191, 201]
+    output_dir: "results/demographic_inference/bottlegrowth_auto_only_test"
+    num_opts: 3
+    ns_list: [80, 80] # haploid sample sizes from populations 2 and 3 (paired)
+    paired_pops: [[2, 3]]
+    collapsed_ids: [1, 2] # collapse the two paired populations into one
+    func_tol: 0.0001
+    param_tol: 0.0001
+    ll_tol: 0.001
+    num_reps: 10 # matches num_sims in config.yaml

@@ -17,6 +17,23 @@ In general, the pipeline is as follows:
 4. Run dadi cache generation (dadi_cache_generation.py)
 5. Run dadi DFE inference (dadi_DFE_inference.py)
 
+### Snakemake workflow
+A Snakemake workflow that runs this pipeline end-to-end (steps 1-5 above, for the autotetraploid-with-diploid-progenitor joint-DFE model: `auto_joint_DFE_burn/finish.slim` + `bottlegrowth_dip_size_change_asym_mig` + lognormal joint mixture DFE) lives at [`../workflows/SLiM_DFE_validation`](../workflows/SLiM_DFE_validation). Scale (Q, L, number of SLiM replicates, REP, cache gamma grid, etc.) is controlled by the YAML files in that workflow's `config/` directory. Run it with:
+```bash
+cd ../workflows/SLiM_DFE_validation
+conda run -n dadi-dev snakemake -s Snakefile --configfile config/config.yaml --cores 4 -p
+```
+This has been tested locally at a small scale (Q=100, L=1e5, 10 SLiM replicates) and takes roughly an hour, dominated by 2D DFE cache generation; scale up the config values for a production run.
+
+While building and testing this workflow, two pre-existing bugs were found and fixed (unrelated to Snakemake itself, so they also affect the plain bash-command pipeline described below):
+- `SLiM_simulations/SLiM_5/auto_joint_DFE_finish.slim` still called the SLiM 4 API (`Individual.genomes`, `Genome.mutationCountsInGenomes`) in several places left over from the SLiM 4->5 port; these are now `.haplosomes` / `mutationCountsInHaplosomes`, matching the fully-converted sibling scripts.
+- `dadi_DFE_inference/demographic_inference/dadi_demographic_inference.py`'s `get_sfs_from_ts` and `get_bootstrap_spectra` built the sample node-id set once from the `_ID_1` tree sequence and reused those raw node ids across all `num_reps` replicate tree sequences. Since each replicate is an independent SLiM run with its own node numbering, this silently used invalid/wrong node ids whenever `num_reps > 1` (the documented multi-replicate use case) — it now rebuilds the sample set per replicate, reseeding the sampling RNG identically each time so the sampled ranks stay reproducible.
+- Separately, in the `dadi` fork (`dadi/Polyploidy/auto_demographics_sel.py`), `bottlegrowth_dip_size_change_asym_mig_sel_single_gamma` was missing its `__param_names__` attribute because a copy-pasted assignment line accidentally targeted `bottlegrowth_asym_mig_w_dips_sel_single_gamma` instead (and corrupted that function's own attribute in the process); this blocked 1D cache generation for that model and has also been fixed.
+
+A second, separate Snakemake workflow at [`../workflows/SLiM_DFE_validation_auto_bottlegrowth`](../workflows/SLiM_DFE_validation_auto_bottlegrowth) runs the plain single-population autotetraploid case instead (`auto_WF_burn.slim` + `auto_nonWF_finish.slim`, no diploid progenitor tracked past the WGD; `bottlegrowth` demographic model; a plain 1D gamma DFE, no joint/mixture model, so only a 1D cache is needed). It's tested at the same small scale (Q=100, L=1e5, 10 SLiM replicates) and runs in well under 10 minutes, since skipping the 2D mixture cache removes the dominant cost from the other workflow. Run it the same way, from its own directory.
+
+No pipeline bugs were found while testing this second workflow, but one config-tuning pitfall is worth flagging: `dadi_cache_generation.py`'s default `--gamma-pts 5` ("for speed") is too coarse to resolve a gamma DFE's likelihood surface by interpolation — with only 5 grid points spanning a 2000-fold gamma range, the DFE optimizer here ran away toward implausibly large `scale` values pegged at whatever upper bound was set, instead of converging to an interior optimum. Bumping to `--gamma-pts 30` (still only ~10s for a single-population 1D cache) fixed this immediately: log-likelihoods became a well-behaved, tightly-converging unimodal surface, and DFE inference recovered shape=0.266 and scale=180 against the SLiM script's simulated shape=0.27/scale=130 (i.e., a very close shape recovery and a reasonable scale recovery, given only 10 replicates at Q=100 scaling). Use at least `gamma_pts` in the 20-30 range even for quick sanity checks, not the documented speed-oriented default of 5.
+
 #### Run SLiM simulations 
 Below, we assume that the relevant SLiM scripts are in the current directory. If not, edit the paths in the commands below.
 ```bash

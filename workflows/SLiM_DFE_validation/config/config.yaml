@@ -1,0 +1,27 @@
+# Snakemake-level configuration for the SLiM -> dadi joint-DFE validation
+# pipeline (autotetraploid with diploid progenitor). Values below are the
+# small-scale local test parameters: Q=100, L=1e5, 10 sims (ID=1..10) at
+# REP=1, so the total simulated genome length is 10 * 1e5 = 1e6.
+#
+# Other demographic/DFE knobs (W, RHO, M_RATE, NU1, NU2, TET_TIME, NU_DIP,
+# DIP_TIME) match the worked example in ../README.md.
+Q: 100
+W: 0.925
+L: 100000 # 1e5
+BURNIN: 20
+REP: 1
+RHO: 0
+SEED: 12321
+M_RATE: 2.0
+NU1: 0.3
+NU2: 0.7
+TET_TIME: 0.3
+NU_DIP: 0.8
+DIP_TIME: 0.15
+num_sims: 10 # ID = 1..num_sims
+
+# dadi_cache_generation.py settings, reduced for a fast local test
+# (production example used gamma-pts 50, cpus 20)
+cache_gamma_bounds: [0.0001, 2000]
+cache_gamma_pts: 5
+cache_cpus: 2

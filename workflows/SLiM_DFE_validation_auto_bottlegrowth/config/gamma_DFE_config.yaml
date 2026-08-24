@@ -1,0 +1,17 @@
+# Small-scale test configuration for dadi_DFE_inference.py (1D gamma DFE).
+# Mirrors DFE_inference/gamma_DFE_config.yaml, with num_opts reduced for a
+# fast local test. initial_params match the gamma DFE actually simulated in
+# auto_nonWF_finish.slim (shape=0.27, from Huber et al. 2018).
+configs:
+  - name: "gamma_DFE_auto_only_test"
+    DFE_type: "1d" # 1d, 2d, or mixture
+    theta_ratio: 2.5 # ratio of theta_ns to theta_syn
+    initial_params: [0.27, 130] # shape, scale
+    lower_bounds: [0.01, 0.01]
+    upper_bounds: [10, 10000]
+    fixed_params: null
+    sel_dist_1d: "gamma"
+    num_opts: 10
+    ll_tol: 0.001
+    output_dir: "results/DFE_inference/dfe_results/gamma_auto_only_test"
+    dfe_param_names: ["shape", "scale"]

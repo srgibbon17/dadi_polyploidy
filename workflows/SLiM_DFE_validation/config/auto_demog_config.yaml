@@ -1,0 +1,22 @@
+# Small-scale test configuration for dadi_demographic_inference.py
+# (autotetraploid bottlegrowth with diploid progenitor and asymmetric
+# migration). Mirrors demographic_inference/auto_demog_config.yaml, but with
+# pts_l and num_opts reduced for a fast local test, and output_dir/num_reps
+# pointed at this workflow's small-scale SLiM run (10 sims).
+configs:
+  - name: "bottlegrowth_autotetraploid_test"
+    ploidyType: "autotetraploid"
+    model: "bottlegrowth_dip_size_change_asym_mig"
+    initial_params: [0.15, 0.15, 0.3, 0.7, 0.8, 0.0, 2.0] # T_WGD, T_dip, nuB, nuF, nu_dip, m12, m21
+    lower_bounds: [0.001, 0.001, 0.01, 0.01, 0.01, 0.0, 0.01]
+    upper_bounds: [10, 10, 10, 10, 10, 10, 10]
+    fixed_params: [null, null, null, null, null, 0.0, null]
+    pts_l: [111, 121, 131]
+    output_dir: "results/demographic_inference/bottlegrowth_test"
+    num_opts: 3
+    ns_list: [80, 48, 48] # haploid sample sizes: diploid, tet-subgenome-A, tet-subgenome-B
+    collapsed_ids: [2, 3] # collapse the two tetraploid subgenome populations
+    func_tol: 0.0001
+    param_tol: 0.0001
+    ll_tol: 0.001
+    num_reps: 10 # matches num_sims in config.yaml

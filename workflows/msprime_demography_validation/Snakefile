@@ -1,0 +1,198 @@
+"""
+Snakemake workflow for the msprime -> dadi demographic validation pipeline
+described in ../../msprime_demography_validation/README.md. The pipeline
+scripts themselves live in ../../msprime_demography_validation/; this
+workflow directory only holds the Snakefile, its config, and run outputs.
+
+Pipeline (mirrors the README's example bash commands for the allo_2epoch
+two-epoch model, comparing a nested (H=0) and full (H free) model with an
+adjusted LRT):
+
+  1. simulate_trees          generate_msprime_samples.py
+  2. dadi_infer (per rep)    dadi_run_inference.py   (runs Nested + Full)
+  3. summarize_nested        summarize_inference_results.py --mode summarize --nested
+     summarize_full          summarize_inference_results.py --mode summarize
+     lrt                     summarize_inference_results.py --mode lrt
+
+Run (from this directory, workflows/msprime_demography_validation/):
+    conda run -n dadi-dev snakemake -s Snakefile --cores 4 -p
+
+Scale is controlled entirely by config/demography_config.yaml (replicates),
+config/inference_config.yaml (pts_l, num_opts), and the --num-windows /
+--num-bootstraps arguments below.
+
+Note on scope: filename templating for the tree-sequence output only covers
+the allo_2epoch model (as used in demography_config.yaml). Extending this
+workflow to auto_2epoch/*_bottlegrowth/*_triple_* would just require adding
+their filename templates to `trees_filename()` below, mirroring the
+corresponding f-string in generate_msprime_samples.py.
+"""
+
+import os
+import yaml
+
+configfile_dir = os.path.join(os.path.dirname(workflow.snakefile), "config")
+SCRIPT_DIR = os.path.normpath(
+    os.path.join(os.path.dirname(workflow.snakefile), "..", "..", "msprime_demography_validation")
+)
+
+with open(f"{configfile_dir}/demography_config.yaml") as f:
+    demog_cfg = yaml.safe_load(f)
+
+if demog_cfg["model"] != "allo_2epoch":
+    raise ValueError(
+        "This Snakefile's trees_filename() only knows the allo_2epoch "
+        "naming scheme; see the module docstring."
+    )
+
+DEMOG = demog_cfg["configs"][0]
+NU_C, T_WGD, HE_RATE = DEMOG["params"]
+SEED = DEMOG["seed"]
+REPLICATES = DEMOG["replicates"]
+TREES_DIR = os.path.normpath(demog_cfg["base_dir"] + DEMOG["output_dir"])
+
+NUM_WINDOWS = 20
+NUM_BOOTSTRAPS = 20
+
+
+def trees_filename(rep_index):
+    # mirrors the allo_2epoch f-string in generate_msprime_samples.py
+    return f"allo_2epoch_T{T_WGD}_nu{NU_C}_H{HE_RATE}_master{SEED}_rep{rep_index}.trees"
+
+
+TREES_FILES = [os.path.join(TREES_DIR, trees_filename(r)) for r in range(REPLICATES)]
+
+NESTED_DIR = "results/inference_results/allo_2epoch/params1/Nested_model"
+FULL_DIR = "results/inference_results/allo_2epoch/params1/Full_model"
+
+
+def opt_filename(trees_path):
+    base = os.path.basename(trees_path).replace(".trees", "")
+    return f"optimization_{base}.txt"
+
+
+NESTED_OPT_FILES = [os.path.join(NESTED_DIR, opt_filename(t)) for t in TREES_FILES]
+FULL_OPT_FILES = [os.path.join(FULL_DIR, opt_filename(t)) for t in TREES_FILES]
+
+
+rule all:
+    input:
+        "results/summary/nested_summary.csv",
+        "results/summary/full_summary.csv",
+        "results/summary/LRT.csv",
+
+
+rule simulate_trees:
+    input:
+        config=f"{configfile_dir}/demography_config.yaml",
+    output:
+        TREES_FILES,
+    log:
+        "results/logs/simulate_trees.log",
+    shell:
+        """
+        mkdir -p results/logs
+        python3 {SCRIPT_DIR}/generate_msprime_samples.py \
+            --config-file {input.config} \
+            > {log} 2>&1
+        """
+
+
+rule dadi_infer:
+    input:
+        config=f"{configfile_dir}/inference_config.yaml",
+        trees=os.path.join(TREES_DIR, "{trees_basename}.trees"),
+    output:
+        nested=os.path.join(NESTED_DIR, "optimization_{trees_basename}.txt"),
+        full=os.path.join(FULL_DIR, "optimization_{trees_basename}.txt"),
+    log:
+        "results/logs/dadi_infer_{trees_basename}.log",
+    shell:
+        """
+        mkdir -p results/logs
+        python3 {SCRIPT_DIR}/dadi_run_inference.py \
+            --config-file {input.config} \
+            --input-file {input.trees} \
+            > {log} 2>&1
+        """
+
+
+rule summarize_nested:
+    input:
+        config=f"{configfile_dir}/summary_config.yaml",
+        trees=TREES_FILES,
+        opt=NESTED_OPT_FILES,
+    output:
+        "results/summary/nested_summary.csv",
+    log:
+        "results/logs/summarize_nested.log",
+    shell:
+        """
+        mkdir -p results/logs
+        python3 {SCRIPT_DIR}/summarize_inference_results.py \
+            --mode summarize \
+            --trees-files {input.trees} \
+            --opt-files {input.opt} \
+            --output-dir results/summary \
+            --output-file nested_summary.csv \
+            --num-windows {NUM_WINDOWS} \
+            --num-bootstraps {NUM_BOOTSTRAPS} \
+            --seed {SEED} \
+            --nested \
+            --config {input.config} \
+            > {log} 2>&1
+        """
+
+
+rule summarize_full:
+    input:
+        config=f"{configfile_dir}/summary_config.yaml",
+        trees=TREES_FILES,
+        opt=FULL_OPT_FILES,
+    output:
+        "results/summary/full_summary.csv",
+    log:
+        "results/logs/summarize_full.log",
+    shell:
+        """
+        mkdir -p results/logs
+        python3 {SCRIPT_DIR}/summarize_inference_results.py \
+            --mode summarize \
+            --trees-files {input.trees} \
+            --opt-files {input.opt} \
+            --output-dir results/summary \
+            --output-file full_summary.csv \
+            --num-windows {NUM_WINDOWS} \
+            --num-bootstraps {NUM_BOOTSTRAPS} \
+            --seed {SEED} \
+            --config {input.config} \
+            > {log} 2>&1
+        """
+
+
+rule lrt:
+    input:
+        config=f"{configfile_dir}/summary_config.yaml",
+        trees=TREES_FILES,
+        nested_opt=NESTED_OPT_FILES,
+        full_opt=FULL_OPT_FILES,
+    output:
+        "results/summary/LRT.csv",
+    log:
+        "results/logs/lrt.log",
+    shell:
+        """
+        mkdir -p results/logs
+        python3 {SCRIPT_DIR}/summarize_inference_results.py \
+            --mode lrt \
+            --trees-files {input.trees} \
+            --opt-files {input.nested_opt} \
+            --opt-files-2 {input.full_opt} \
+            --output-dir results/summary \
+            --output-file LRT.csv \
+            --num-windows {NUM_WINDOWS} \
+            --num-bootstraps {NUM_BOOTSTRAPS} \
+            --seed {SEED} \
+            --config {input.config} \
+            > {log} 2>&1
+        """

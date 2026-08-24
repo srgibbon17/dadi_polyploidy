@@ -22,7 +22,7 @@ slim -d Qfactor=10 -d W=0.925 -d RHO=0 -d L=5e5 -d BURNIN=20 -d REP=1 -d ID=1 -d
 	(a) Four genomes: the "real" individuals are in p3. Each individual has their other two genomes stashed
 	away in an individual in p2; the individuals in p2 don't do anything on their own. To identify them,
 	each individual in p3 has a "tag" that records the index of their pair in p2, so that
-	    p2.individuals[ind.tag].genomes
+	    p2.individuals[ind.tag].haplosomes
 	gets you the other two genomes for individual "ind" in p2. (To create these associations, we give each
 	individual a unique label, stored in their tagF property, and then index them each generation to set the tag) 
 	
@@ -386,14 +386,14 @@ late(){
 	
 	// "non-storage" AUTOTETRAPLOID pop; use 's2' for m1 mutations
 	for (ind in p3.individuals){
-		genomes = c(ind.genomes,sim.subpopulations[0].individuals[ind.tag].genomes);
+		genomes = c(ind.haplosomes,sim.subpopulations[0].individuals[ind.tag].haplosomes);
 		// m1 mutations
 		mutations_m1 = unique(c(genomes.mutationsOfType(m1)));
 		if(size(mutations_m1)==0){
 			fit_vector_m1 = 1.0;
 		}
 		else {
-			counts_m1 = genomes.mutationCountsInGenomes(mutations_m1);
+			counts_m1 = genomes.mutationCountsInHaplosomes(mutations_m1);
 			mut = mutations_m1[0];
 			count = counts_m1[0];
 			if (isNULL(mut.getValue('h')[count]) | isNULL(mut.getValue('s2')))
@@ -410,7 +410,7 @@ late(){
 			fit_vector_m2 = 1.0;
 		}
 		else{
-			counts_m2 = genomes.mutationCountsInGenomes(mutations_m2);
+			counts_m2 = genomes.mutationCountsInHaplosomes(mutations_m2);
 			mut = mutations_m2[0];
 			count = counts_m2[0];
 			if (isNULL(mut.getValue('h')[count]) | isNULL(mut.getValue('s'))){
@@ -482,18 +482,18 @@ reproduction(p3){
 			
 			if (migration[j] == 1){
 				if (sample(c(1,2), 1) == 1){ // sample which parent to replace				
-					p1_chroms = c(dip_migrants[j].genomes, dip_migrants[j].genomes);
-					p2_chroms = c(parents2[j].genomes, p2.individuals[parents2[j].tag].genomes);
+					p1_chroms = c(dip_migrants[j].haplosomes, dip_migrants[j].haplosomes);
+					p2_chroms = c(parents2[j].haplosomes, p2.individuals[parents2[j].tag].haplosomes);
 				}
 				else {
-					p1_chroms = c(parents1[j].genomes, p2.individuals[parents1[j].tag].genomes);
-					p2_chroms = c(dip_migrants[j].genomes, dip_migrants[j].genomes);
+					p1_chroms = c(parents1[j].haplosomes, p2.individuals[parents1[j].tag].haplosomes);
+					p2_chroms = c(dip_migrants[j].haplosomes, dip_migrants[j].haplosomes);
 				}
 			}
 			else {
 				// get chromosomes from parent1 and parent2 (including tagged chromosomes in other population)
-				p1_chroms = c(parents1[j].genomes, p2.individuals[parents1[j].tag].genomes);
-				p2_chroms = c(parents2[j].genomes, p2.individuals[parents2[j].tag].genomes);
+				p1_chroms = c(parents1[j].haplosomes, p2.individuals[parents1[j].tag].haplosomes);
+				p2_chroms = c(parents2[j].haplosomes, p2.individuals[parents2[j].tag].haplosomes);
 			}
 			
 			//randomize recombination order for autopolyploids
@@ -532,8 +532,8 @@ reproduction() {
 		parents2 = sample(inds, K_tet_0, replace=T, weights=fitnesses);
 		
 		for (j in seqLen(K_tet_0)){
-			p1_chroms = c(parents1[j].genomes, parents1[j].genomes);
-			p2_chroms = c(parents2[j].genomes, parents2[j].genomes);
+			p1_chroms = c(parents1[j].haplosomes, parents1[j].haplosomes);
+			p2_chroms = c(parents2[j].haplosomes, parents2[j].haplosomes);
 			
 			//randomize whether WGD happened before or after meiosis 
 			p1_order = sample(seqLen(4), 4);

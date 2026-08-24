@@ -1,0 +1,30 @@
+# Small-scale test configuration for dadi_run_inference.py
+# Nested (H fixed to 0) and Full (H free) allo two_epoch models, run on the
+# same input .trees file so that summarize_inference_results.py can later
+# compute the LRT between them.
+#
+# pts_l and num_opts are reduced from the production example
+# (inference_configs_ex.yaml) to keep a local test run fast; ns=(20,20) is
+# small, so pts_l=[51,61,71] is still well above max(ns) for extrapolation.
+configs:
+  - name: "Nested model"
+    ploidyType: "allotetraploid"
+    model: "two_epoch"
+    initial_params: [1.5, 0.5, 0.01]
+    lower_bounds: [0.001, 0.001, 0]
+    upper_bounds: [10, 10, 30]
+    fixed_params: [null, null, 0]
+    output_dir: "results/inference_results/allo_2epoch/params1/Nested_model"
+    num_opts: 3
+    pts_l: [51, 61, 71]
+
+  - name: "Full model"
+    ploidyType: "allotetraploid"
+    model: "two_epoch"
+    initial_params: [1.5, 0.5, 0.01]
+    lower_bounds: [0.001, 0.001, 0]
+    upper_bounds: [10, 10, 30]
+    fixed_params: null
+    output_dir: "results/inference_results/allo_2epoch/params1/Full_model"
+    num_opts: 3
+    pts_l: [51, 61, 71]

@@ -25,6 +25,14 @@ In general, the pipeline is:
 2. Compute the SFS and infer demographic parameters with dadi (`dadi_run_inference.py`)
 3. Summarize the inference results and compute uncertainties/LRTs/AIC/etc. (`summarize_inference_results.py`)
 
+### Snakemake workflow
+A Snakemake workflow that runs this pipeline end-to-end (steps 1-3 above, for the allo_2epoch nested-vs-full-model/LRT example) lives at [`../workflows/msprime_demography_validation`](../workflows/msprime_demography_validation). Scale (replicates, grid points, number of optimizations, bootstrap settings) is controlled entirely by the YAML files in that workflow's `config/` directory. Run it with:
+```bash
+cd ../workflows/msprime_demography_validation
+conda run -n dadi-dev snakemake -s Snakefile --cores 4 -p
+```
+This has been tested locally at a small scale (10 replicates) and completes in a few minutes; scale up `replicates` and the other config values for a production run. Note that the workflow's tree-sequence filename templating currently only supports the `allo_2epoch` model; extending it to the other models in `generate_msprime_samples.py` just requires adding their filename templates to `trees_filename()` in the Snakefile.
+
 #### Example command line usage
 First, we simulate some tree sequences with msprime (throughout, we assume everything is in a `scripts` folder in the current working directory):
 ```bash

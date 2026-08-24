@@ -1,0 +1,195 @@
+"""
+Snakemake workflow for the SLiM -> dadi joint-DFE validation pipeline
+described in ../../SLiM_DFE_validation/README.md (autotetraploid with
+diploid progenitor, lognormal joint-mixture DFE). The pipeline scripts
+themselves live in ../../SLiM_DFE_validation/; this workflow directory only
+holds the Snakefile, its config, and run outputs.
+
+Pipeline:
+  1. slim_burnin              auto_joint_DFE_burn.slim    (per ID)
+  2. slim_finish               auto_joint_DFE_finish.slim  (per ID)
+  3. dadi_demographic_inference  dadi_demographic_inference.py (all IDs -> 1 SFS)
+  4. dadi_cache_generation       dadi_cache_generation.py   (1D + 2D caches)
+  5. dadi_dfe_inference          dadi_DFE_inference.py      (lognormal mixture)
+
+Run (from this directory, workflows/SLiM_DFE_validation/):
+    conda run -n dadi-dev snakemake -s Snakefile --configfile config/config.yaml --cores 4 -p
+
+Scale is controlled by config/config.yaml (Q, L, num_sims, REP, ...) and the
+two dadi config files (config/auto_demog_config.yaml,
+config/lognormal_joint_DFE_config.yaml).
+
+Note on scope: this workflow only wires up the autotetraploid joint-DFE
+model (auto_joint_DFE_burn/finish.slim + bottlegrowth_dip_size_change_asym_mig
++ lognormal joint mixture DFE), matching the worked example in the READMEs.
+The allotetraploid and plain-autotetraploid SLiM scripts would need analogous
+rules if extended later.
+"""
+
+import os
+
+WORKFLOW_DIR = os.path.dirname(workflow.snakefile)
+BASE_DIR = os.path.normpath(os.path.join(WORKFLOW_DIR, "..", "..", "SLiM_DFE_validation"))
+SLIM_DIR = os.path.join(BASE_DIR, "SLiM_simulations", "SLiM_5")
+DEMOG_SCRIPT = os.path.join(BASE_DIR, "dadi_DFE_inference", "demographic_inference", "dadi_demographic_inference.py")
+CACHE_SCRIPT = os.path.join(BASE_DIR, "dadi_DFE_inference", "DFE_inference", "dadi_cache_generation.py")
+DFE_SCRIPT = os.path.join(BASE_DIR, "dadi_DFE_inference", "DFE_inference", "dadi_DFE_inference.py")
+
+SLIM_BIN = "slim"
+
+Q = config["Q"]
+W = config["W"]
+L = config["L"]
+BURNIN = config["BURNIN"]
+REP = config["REP"]
+RHO = config["RHO"]
+SEED = config["SEED"]
+M_RATE = config["M_RATE"]
+NU1 = config["NU1"]
+NU2 = config["NU2"]
+TET_TIME = config["TET_TIME"]
+NU_DIP = config["NU_DIP"]
+DIP_TIME = config["DIP_TIME"]
+NUM_SIMS = config["num_sims"]
+
+CACHE_GAMMA_BOUNDS = config["cache_gamma_bounds"]
+CACHE_GAMMA_PTS = config["cache_gamma_pts"]
+CACHE_CPUS = config["cache_cpus"]
+
+IDS = list(range(1, NUM_SIMS + 1))
+
+BURNIN_PATTERN = f"results/trees/burnin/auto_burnin_Q_{Q}_REP_{REP}_ID_{{id}}.trees"
+FINAL_PATTERN = f"results/trees/final/auto_final_Q_{Q}_REP_{REP}_ID_{{id}}.trees"
+FINAL_TREES = [FINAL_PATTERN.format(id=i) for i in IDS]
+
+DEMOG_OUTPUT_DIR = "results/demographic_inference/bottlegrowth_test"
+CACHE_OUTPUT_DIR = "results/DFE_inference/caches/bottlegrowth_test"
+
+FINAL_TREES_ID1 = FINAL_PATTERN.format(id=1)
+
+# base name derived from the ID=1 tree sequence (the script loads ID_1..ID_N
+# internally based on num_reps in the config file)
+BASE_NAME = f"auto_final_Q_{Q}_REP_{REP}_ID_1"
+SYN_SFS = os.path.join(DEMOG_OUTPUT_DIR, f"{BASE_NAME}.sfs")
+NONSYN_SFS = os.path.join(DEMOG_OUTPUT_DIR, f"nonsyn{BASE_NAME}.sfs")
+DEMOG_OPT_FILE = os.path.join(DEMOG_OUTPUT_DIR, f"optimization_{BASE_NAME}.txt")
+
+CACHE_1D = os.path.join(CACHE_OUTPUT_DIR, f"{BASE_NAME}_1d_cache.bpkl")
+CACHE_2D = os.path.join(CACHE_OUTPUT_DIR, f"{BASE_NAME}_2d_cache.bpkl")
+
+DFE_OUTPUT_DIR = "results/DFE_inference/dfe_results/lognormal_joint_test"
+DFE_OPT_FILE = os.path.join(DFE_OUTPUT_DIR, f"DFE_optimization_nonsyn{BASE_NAME}.txt")
+DFE_PLOT = os.path.join(DFE_OUTPUT_DIR, f"DFE_optimization_nonsyn{BASE_NAME}_plot.pdf")
+
+
+rule all:
+    input:
+        DFE_OPT_FILE,
+        DFE_PLOT,
+
+
+rule slim_burnin:
+    output:
+        BURNIN_PATTERN,
+    log:
+        "results/logs/slim_burnin_ID_{id}.log",
+    shell:
+        """
+        LOG_ABS=$(pwd)/{log}
+        mkdir -p results/trees/burnin results/logs
+        ( cd results && {SLIM_BIN} \
+            -d Qfactor={Q} -d W={W} -d L={L} -d BURNIN={BURNIN} \
+            -d REP={REP} -d ID={wildcards.id} -d SEED={SEED} \
+            {SLIM_DIR}/auto_joint_DFE_burn.slim ) > "$LOG_ABS" 2>&1
+        """
+
+
+rule slim_finish:
+    input:
+        BURNIN_PATTERN,
+    output:
+        FINAL_PATTERN,
+    log:
+        "results/logs/slim_finish_ID_{id}.log",
+    shell:
+        """
+        LOG_ABS=$(pwd)/{log}
+        mkdir -p results/trees/final results/logs
+        ( cd results && {SLIM_BIN} \
+            -d Qfactor={Q} -d W={W} -d RHO={RHO} -d L={L} -d BURNIN={BURNIN} \
+            -d REP={REP} -d ID={wildcards.id} -d SEED={SEED} \
+            -d M_RATE={M_RATE} -d NU1={NU1} -d NU2={NU2} -d TET_TIME={TET_TIME} \
+            -d NU_DIP={NU_DIP} -d DIP_TIME={DIP_TIME} \
+            {SLIM_DIR}/auto_joint_DFE_finish.slim ) > "$LOG_ABS" 2>&1
+        """
+
+
+rule dadi_demographic_inference:
+    input:
+        config="config/auto_demog_config.yaml",
+        trees=FINAL_TREES,
+    output:
+        syn_sfs=SYN_SFS,
+        nonsyn_sfs=NONSYN_SFS,
+        opt=DEMOG_OPT_FILE,
+    log:
+        "results/logs/dadi_demographic_inference.log",
+    shell:
+        """
+        mkdir -p results/logs
+        python3 {DEMOG_SCRIPT} \
+            --config-file {input.config} \
+            --input-file {FINAL_TREES_ID1} \
+            > {log} 2>&1
+        """
+
+
+rule dadi_cache_generation:
+    input:
+        nonsyn=NONSYN_SFS,
+        opt=DEMOG_OPT_FILE,
+    output:
+        cache1d=CACHE_1D,
+        cache2d=CACHE_2D,
+    log:
+        "results/logs/dadi_cache_generation.log",
+    shell:
+        """
+        mkdir -p results/logs
+        python3 {CACHE_SCRIPT} \
+            --nonsyn-file {input.nonsyn} \
+            --opt-file {input.opt} \
+            --ploidyType autotetraploid \
+            --model bottlegrowth_dip_size_change_asym_mig \
+            --cache-type both \
+            --output-dir {CACHE_OUTPUT_DIR} \
+            --gamma-bounds {CACHE_GAMMA_BOUNDS[0]} {CACHE_GAMMA_BOUNDS[1]} \
+            --gamma-pts {CACHE_GAMMA_PTS} \
+            --cpus {CACHE_CPUS} \
+            > {log} 2>&1
+        """
+
+
+rule dadi_dfe_inference:
+    input:
+        config="config/lognormal_joint_DFE_config.yaml",
+        nonsyn=NONSYN_SFS,
+        opt=DEMOG_OPT_FILE,
+        cache1d=CACHE_1D,
+        cache2d=CACHE_2D,
+    output:
+        opt=DFE_OPT_FILE,
+        plot=DFE_PLOT,
+    log:
+        "results/logs/dadi_dfe_inference.log",
+    shell:
+        """
+        mkdir -p results/logs
+        python3 {DFE_SCRIPT} \
+            --config-file {input.config} \
+            --nonsyn-sfs {input.nonsyn} \
+            --opt-file {input.opt} \
+            --cache1D {input.cache1d} \
+            --cache2D {input.cache2d} \
+            > {log} 2>&1
+        """
