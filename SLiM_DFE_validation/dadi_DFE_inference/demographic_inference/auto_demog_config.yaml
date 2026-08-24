@@ -1,0 +1,25 @@
+# It can be convenient to specify many demographic models to infer for the same data 
+# for comparing model fit, running LRTs or comparing AIC, etc. 
+# This is done by just specifying multiple configs in the same YAML file.
+
+configs:
+  # Config 1: bottlegrowth with dips, no misid, large ns
+  - name: "bottlegrowth_autotetraploid_ex"
+    ploidyType: "autotetraploid" # options are "autotetraploid", "allotetraploid"
+    model: "bottlegrowth_dip_size_change_asym_mig" # model to infer; see list of models in dadi_demographic_inference.py
+    initial_params: [0.15, 0.15, 0.3, 0.7, 0.8, 0.0, 2.0]  # T_WGD, T_dip, nuB, nuF, nu_dip, m12, m21
+    lower_bounds: [0.001, 0.001, 0.01, 0.01, 0.01, 0.0, 0.01]
+    upper_bounds: [10, 10, 10, 10, 10, 10, 10]
+    fixed_params: [null, null, null, null, null, 0.0, null] # specify any fixed parameters here
+    pts_l: [201, 211, 221] # specify grid points for dadi
+    output_dir: "bottlegrowth" # output directory
+    num_opts: 50 # maximum number of optimizations to run
+    ns_list: [80, 48, 48] # number of haploids from each subgenome/population
+    collapsed_ids: [2, 3] # which populations to collapse together, if any; 
+    # for an autotetraploid model, SLiM stores indviduals in two "subpopulations", 
+    # so we need to combine or collapse those populations
+    func_tol: 0.0001 # relative func tolerance for convergence for a given optimization
+    param_tol: 0.0001 # relative param tolerance for convergence for a given optimization
+    ll_tol: 0.001 # relative ll tolerance for convergence to halt optimizations
+    num_reps: 10 # number of simulated tree files used to build the SFS; 
+                 # e.g., if we have {name}_ID_1.trees, ..., {name}_ID_10.trees, we set this to 10

@@ -1,0 +1,119 @@
+/*
+command line usage example: 
+slim -d Qfactor=10 -d W=0.925 -d L=5e5 -d BURNIN=20 -d REP=1 -d ID=1 -d SEED=365 auto_joint_DFE_burn.slim
+*/
+
+//Samuel R. Gibbon and Justin L. Conover, 22 August 2026: Diploid burnin for joint DFE model to later simulate autotetraploids. See accompanying nonWF_final script for much more detail.
+
+
+// set up the diploid WF simulation with the joint DFE
+initialize() {
+	// define defaults for command line parameters
+	// scaling factor to speed up simulations
+	if (exists("Qfactor")){
+		defineConstant("Q", Qfactor);
+	} else{
+		defineConstant("Q", 10);
+	}
+	
+	// proportion of mutations which are perfectly correlated
+	if (exists("W")){
+		defineConstant("w", W);
+	} else{
+		defineConstant("w", 0.925);
+	}
+	
+	// define the genome length
+	if (exists("L")){
+		defineConstant("g_size", L - 1);
+	} else{
+		defineConstant("g_size", 5e3 - 1);
+	}
+	// burnin length in units of N generations
+	if (exists("BURNIN")){
+		defineConstant("burn", BURNIN);
+	} else{
+		defineConstant("burn", 20);
+	}
+	
+	// constants for file management
+	if (exists("REP")){
+		defineConstant("rep", REP);
+	} else{
+		defineConstant("rep", 1);
+	}
+	if (exists("ID")){
+		defineConstant("id", ID);
+	} else{
+		defineConstant("id", 1);
+	}
+	
+	// set the seed, pulling in the rep and id to differentiate among runs
+	// also, add a small value to differentiate from the final script
+	if (exists("SEED")){
+		setSeed(asInteger(SEED + id * rep + 123));
+	} else{
+		setSeed(asInteger(42 + id * rep + 123));
+	}
+	
+	
+	initializeMutationRate((2.5/3.5)*7e-9*Q); // from stdpopsim catalog for Arabidopsis thaliana
+	
+	// m1 mutation type: lognormal DFE, additive dominance and rho!=1
+	// we define the alternative effects later (in the nonWF script)
+	
+	// better fit to discretized bins of the DFE...
+	// now, convert to location and shape parameters for the lognormal DFE
+	defineConstant("loc", 1.69155136 - log(161744.0/Q));
+	defineConstant("shape", 2.37871223);
+	
+	// and sample the selection coefficients from a lognormal dist'n
+	initializeMutationType("m1", 0.5, "s", "return -1*rlnorm(1,loc,shape);");
+	
+	// m2 mutation type: lognormal DFE, additive dominance, and rho=1
+	initializeMutationType("m2", 0.5, "s", "return -1*rlnorm(1,loc,shape);");
+	
+	// g1 genomic element type: m1 and m2 mutations
+	// we will overlay neutral mutations later with msprime
+	// the non-perfectly correlated mutations (m1) occur at proportion 1-w with correlation rho and the perfectly correlated ones (m2) occur at proportion w
+	initializeGenomicElementType("g1", c(m1, m2), c(1.0 - w, w));
+	
+	// SRG: Switch the commenting below for a genome with genic and intergenic regions or exons and introns (depending on your interpretation)
+	initializeGenomicElement(g1, 0, g_size);
+	//defineConstant("L0", 200e3); // between genes
+	//defineConstant("L1", 1e3); // gene length
+	//for (start in seq(from=L0, to=g_size-(L0+L1), by=(L0+L1)))
+	//	initializeGenomicElement(g1, start, (start+L1)-1);
+	
+	initializeRecombinationRate((1-(1-2*3.676138452842427e-08)^Q)/2);
+	
+	m1.convertToSubstitution = T;
+	
+	// use tree sequence recording to check for coalesence
+	initializeTreeSeq();
+	
+	// stop the simulation early if the output file already exists
+	if (fileExists("trees/burnin/auto_burnin_Q_"+Q+"_REP_"+rep+"_ID_"+id+".trees")){
+		stop("File trees/burnin/auto_burnin_Q_"+Q+"_REP_"+rep+"_ID_"+id+".trees already exists");
+	}
+}
+
+// create a population 
+1 early() {
+	sim.addSubpop("p1", asInteger(round(161744.0/Q)) );
+}
+
+// monitor fitness
+1:(asInteger(round(burn*161744.0/Q))) early() {
+	if(community.tick % 100000 == 0) {
+		print(community.tick);
+		print(mean(p1.cachedFitness(NULL)));
+	}
+}
+
+// so, instead, we stop after 20N generations
+asInteger(round(burn*161744.0/Q)) late() {
+	sim.treeSeqOutput("trees/burnin/auto_burnin_Q_"+Q+"_REP_"+rep+"_ID_"+id+".trees");
+}
+
+

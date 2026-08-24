@@ -1,0 +1,525 @@
+/*
+command line usage example: 
+slim -d Qfactor=10 -d L=2e5 -d BURNIN=10 -d DIP_DIV=1 -d REP=1 -d ID=1 -d SEED=365 -d NU1=0.25 -d NU2=0.9 -d TIME1=0.2 -d TIME2=0.3 allo_nonWF_finish.slim
+*/
+
+
+//Samuel R. Gibbon and Justin L. Conover, 22 August 2026: allotetraploidy with a gamma DFE. The model loads a tree sequence from a diploid WF burn-in.
+//William W. Booker, 10 January 2024: allotetraploidy
+//Based on a concept by Yaniv Brandvain and Peter Ralph
+
+// Written for compatibility with SLiM 4.3 as installed on the U of A HPC at time of writing.
+
+/*  
+	Details on allotetraploidy:
+	
+	This is a nonWF model of an autotetraploid with bivalent pairing and disomic inheritance with `soft` selection (i.e., fecundity selection as in a WF model)
+   	To do this, we have to:
+	
+	(a) give each individual *four* genomes
+	(b) con trolcrossing-over to be within subgenomes
+	(c) compute fitness with all four genomes
+	
+	(a) Four genomes: the "real" individuals are in p4. Each individual has their other two genomes stashed
+	away in an individual in p3; the individuals in p3 don't do anything on their own. To identify them,
+	each individual in p4 has a "tag" that records the index of their pair in p3, so that
+	    p3.individuals[ind.tag].genomes
+	gets you the other two genomes for individual "ind" in p3. (To create these associations, we give each
+	individual a unique label, stored in their tagF property, and then index them each generation to set the tag) 
+	
+	(b) For crossing-over, we pick random orderings within each subgenome,
+    	then do crossing-over between pairs of haplosomes/chromosomes from within the subgenome. Recombination here is bivalent pairing with disomic inheritance. Each of p2 and p3 store one subgenome.
+	
+	(c) Every new mutation has a property, "h", the dominance coefficient, that is a vector of length 5, 
+    	and "s" which is the selection coefficient. For simplicity, we only model additive selection (i.e., h = [0, 0.25, 0.5, 0.75, 1]). Fitness is calculated by taking the count of the number of mutations [0-4],
+    	using that as the index of the h vector, and multiplying that by s. In this model fitness is multiplicative.
+    	Then, fitness is stored for each 'real' individual in p4 and used to weight reproductive success in the following generation. 
+
+*/
+
+/*
+	DFE:
+		gamma-distributed DFE inferred by Huber et al. 2018 with additive dominance for A. thaliana. shape parameter = 0.27 and mean (in terms of s) is -0.000216 * Q (where Q is the scaling factor).
+		
+		
+	Demography: 
+		Two epoch with two size changes (one at the time of WGD and a contemporary size).
+		
+	Mutation and recombination rates: 
+		mu = 7e-9
+		We assume that the ratio of synonymous to nonsynonymous mutations is 1:2.5 (although Huber et al. 2018 which uses 1:2.31 may be better). Since tree sequence recording is turned on, we overlay neutral mutations later with msprime.
+		r = 3.676138452842427e-08
+		Both are from stdpopsim catalog for Arabidopsis thaliana. 
+		Note that the recombination rate we use here is *not* adjusted for selfing as it is in the stdpopsim catalog because we want to model A. arenosa.
+		
+	Effective population size: 
+		We assume a diploid ancestral effective population size of 161744 as inferred by Huber et al. 2018 for a three epoch size history. 
+*/
+
+/*
+	The script will raise a handful of errors (which can be ignored). 
+	First, since we load a tree sequence from a WF model into this nonWF model, we will get an error (but this is done intentionally and does not introduce any bugs as far as I (SRG) have checked). 
+	Second, since we simulate mutations which are nominally neutral to SLiM and have tree sequence recording turned on, we get an error. But, the mutations have fitness consequences set in s or s2, just not stored in the selection coefficient property of the mutations.
+*/
+
+initialize()
+{
+	// parameters specified at command line with defaults
+	// scaling factor to speed up simulations
+	if (exists("Qfactor")){
+		defineConstant("Q", Qfactor);
+	} else{
+		defineConstant("Q", 10);
+	}
+	
+	// constants for file management
+	if (exists("REP")){
+		defineConstant("rep", REP);
+	} else{
+		defineConstant("rep", 1);
+	}
+	if (exists("ID")){
+		defineConstant("id", ID);
+	} else{
+		defineConstant("id", 1);
+	}
+	
+	// set the seed, pulling in the rep and id to differentiate among runs
+	if (exists("SEED")){
+		setSeed(asInteger(SEED + id * rep));
+	} else{
+		setSeed(asInteger(42 + id * rep));
+	}
+	
+	//set population parameters
+	defineConstant("Kdip", asInteger(round(161744.0/Q))); // population size / carrying capacity of contemporary diploid progenitor // p1
+	
+	// diffusion scaled time for diploid progenitor divergence
+	if (exists("DIP_DIV")){
+		defineConstant("dip_div", DIP_DIV);
+	} else{
+		defineConstant("dip_div", 1.0);
+	}
+	// relative population size of initial tetraploid popuation (p2 and p3)
+	if (exists("NU1")){
+		defineConstant("nu1", NU1);
+	} else{
+		defineConstant("nu1", 0.25);
+	}
+	// relative population size of contemporary tetraploid popuation (p2 and p3)
+	if (exists("NU2")){
+		defineConstant("nu2", NU2);
+	} else{
+		defineConstant("nu2", 0.9);
+	}
+	// diffusion scaled time for WGD until size change
+	if (exists("TIME1")){
+		defineConstant("T1", TIME1);
+	} else{
+		defineConstant("T1", 0.2);
+	}
+	// diffusion scaled time from size change to modern day
+	if (exists("TIME2")){
+		defineConstant("T2", TIME2);
+	} else{
+		defineConstant("T2", 0.3);
+	}
+	
+	// define burnin period (in terms of N generations)
+	if (exists("BURNIN")){
+		defineConstant("burnin", BURNIN);
+	} else{
+		defineConstant("burnin", 20.0);
+	}
+	
+	
+	// convert above to standard, generational units
+	defineConstant("BURN", asInteger(burnin+2*dip_div)*Kdip);
+	defineConstant("T1_GEN", asInteger(round(2*Kdip*T1)));
+	defineConstant("T2_GEN", asInteger(round(2*Kdip*T2)));
+	// total sim time is BURN + T1_GEN + T2_GEN
+	
+	defineConstant("K_tet_0", asInteger(round(nu1*Kdip))); //initial tetraploid size
+	defineConstant("K_tet_F", asInteger(round(nu2*Kdip))); //final tetraploid size
+	
+	// define the genome length
+	if (exists("L")){
+		defineConstant("g_size", L - 1);
+	} else{
+		defineConstant("g_size", 5e3 - 1);
+	}
+	
+	
+	defineConstant("self_rate", 0.0); //selfing rate for inbreeding models
+	//	defineConstant("Fis", 2*self_rate/(1+self_rate);
+	//	defineConstant("self_rate", 2*Fis/(1+Fis));
+	defineConstant("CHR", 0);
+	
+	//set as nonWF model
+	initializeSLiMModelType("nonWF");
+	
+	// Use treeseq so we can add neutral mutations later 
+	initializeTreeSeq();
+	
+	//set non-neutral mutation rate
+	initializeMutationRate((2.5/3.5)*7e-9*Q);
+	
+	//set s here to 0 because we need to calculate it manually. dominance coefficient not important either
+	initializeMutationType("m1", 0.5, "f", 0.0);
+	
+	//ensure mutations do convert for efficiency
+	m1.convertToSubstitution = T;
+	
+	
+	//initialize genome and recombination rate
+	initializeGenomicElementType("g1", m1, 1);
+	// SRG: switch the commenting below to add a genome with genic and intergenic or exonic and intronic regions	
+	initializeGenomicElement(g1, 0, g_size);
+	//defineConstant("L0", 200e3); // between genes
+	//defineConstant("L1", 1e3); // gene length
+	//for (start in seq(from=L0, to=g_size-(L0+L1), by=(L0+L1)))
+	//	initializeGenomicElement(g1, start, (start+L1)-1);
+	
+	
+	initializeRecombinationRate((1-(1-2*3.676138452842427e-08)^Q)/2);
+	
+	//define h for polyploids, commented ones include possible examples
+	
+	//additive
+	defineGlobal("h_m1", c(0.0, 0.25, 0.5, 0.75, 1.0));
+	
+	//initialize continuous tag for tracking chromosomes to individuals
+	defineGlobal("c_tag", 0);
+	
+	// set parameters for DFE distribution
+	// gamma
+	defineGlobal("gamma_mean", -0.00021600000000000002 * Q);
+	defineGlobal("gamma_shape", 0.27);
+}
+
+// load the burned in population
+1 early() {
+	if (fileExists("trees/burnin/allo_burnin_Q_"+Q+"_REP_"+rep+"_ID_"+id+".trees")) {
+		sim.readFromPopulationFile("trees/burnin/allo_burnin_Q_"+Q+"_REP_"+rep+"_ID_"+id+".trees");
+		print("Loaded p1 with " + p1.individualCount + " individuals");
+		print("Loaded p2 with " + p2.individualCount + " individuals");
+	} else {
+		stop("Burnin file not found: trees/burnin/allo_burnin_Q_"+Q+"_REP_"+rep+"_ID_"+id+".trees");
+	}
+	// reset s and h for mutations
+	for (mut in sim.mutations) {
+		mut.setValue("s", mut.selectionCoeff);
+		mut.setValue("h", h_m1);
+	}
+	// add subpops for tetraploid
+	sim.addSubpop(3, 0); //SRG:tetraploid storage pop
+	sim.addSubpop(4, 0); //SRG:tetraploid fitness pop
+}
+
+//need to set s and h for the mutations as they appear, since we don't set them initially
+mutation(m1)
+{
+	s_draw = rgamma(1, gamma_mean, gamma_shape);
+	mut.setValue("s", s_draw);
+	mut.setValue("h", h_m1);
+	return T;
+}
+
+//Print tick every one hundred generations
+(BURN+1):(BURN+T1_GEN+T2_GEN) early() {
+	if(community.tick % 100 == 0){
+		print(community.tick);
+		print('Allotetraploid average fitness:');
+		print(mean(p4.individuals.getValue('fitness')));
+	}
+}
+
+// set tag as the index of the individual in the storage population to speed up reproduction and fitness calculations
+BURN + 2: first() { // #burn_in + 2
+	inds = p4.individuals;
+	tag = match(inds.tagF, p3.individuals.tagF);
+	inds.tag = tag;
+}
+
+BURN+1: early(){ // #burn_in + 1
+	inds = p4.individuals;
+	tag = match(inds.tagF, p3.individuals.tagF);
+	inds.tag = tag;
+}
+
+BURN+1: late() { // #burn_in + 1 
+	inds = p4.individuals;
+	tag = match(inds.tagF, p3.individuals.tagF);
+	inds.tag = tag;
+}
+
+// fitness calculation and storage for all populations
+late(){
+	// diploid progenitors A
+	for (ind in p1.individuals){
+		genomes = c(ind.genomes);
+		mutations = unique(c(genomes.mutationsOfType(m1)));
+		if(size(mutations)==0){
+			fit_vector = 1.0;
+		}
+		else{
+			mut_counts = genomes.mutationCountsInGenomes(mutations);
+			mut = mutations[0];
+			count = 2 * mut_counts[0]; //SRG: the 2 scales up to the h-vector of length 5 used for tetraploids
+			if (isNULL(mut.getValue('h')[count]) | isNULL(mut.getValue('s'))){
+				fit_vector = 1.0;
+			}
+			else {
+				//calculate fitness for all mutations then take the product of that vector to get multiplicative fitness
+				fit_vector = sapply(seqAlong(mutations), "mut = mutations[applyValue]; count = 2 * mut_counts[applyValue]; 1 + mut.getValue('h')[count] * mut.getValue('s');");
+			}
+		}
+		ind.setValue('fitness', product(fit_vector));
+	}
+	
+	// diploid progenitors B
+	for (ind in p2.individuals){
+		genomes = c(ind.genomes);
+		mutations = unique(c(genomes.mutationsOfType(m1)));
+		if(size(mutations)==0){
+			fit_vector = 1.0;
+		}
+		else{
+			mut_counts = genomes.mutationCountsInGenomes(mutations);
+			mut = mutations[0];
+			count = 2 * mut_counts[0]; //SRG: the 2 scales up to the h-vector of length 5 used for tetraploids
+			if (isNULL(mut.getValue('h')[count]) | isNULL(mut.getValue('s'))){
+				fit_vector = 1.0;
+			}
+			else {
+				//calculate fitness for all mutations then take the product of that vector to get multiplicative fitness
+				fit_vector = sapply(seqAlong(mutations), "mut = mutations[applyValue]; count = 2 * mut_counts[applyValue]; 1 + mut.getValue('h')[count] * mut.getValue('s');");
+			}
+		}
+		ind.setValue('fitness', product(fit_vector));
+	}
+	
+	// "non-storage" autotetraploid pop
+	for (ind in p4.individuals){
+		genomes = c(ind.genomes,sim.subpopulations[2].individuals[ind.tag].genomes);
+		mutations = unique(c(genomes.mutationsOfType(m1)));
+		if(size(mutations)==0){
+			fit_vector = 1.0;
+		}
+		else{
+			mut_counts = genomes.mutationCountsInGenomes(mutations);
+			mut = mutations[0];
+			count = mut_counts[0];
+			if (isNULL(mut.getValue('h')[count]) | isNULL(mut.getValue('s'))){
+				fit_vector = 1.0;
+			}
+			else {
+				//calculate fitness for all mutations then take the product of that vector to get multiplicative fitness
+				fit_vector = sapply(seqAlong(mutations), "mut = mutations[applyValue]; count = mut_counts[applyValue]; 1 + mut.getValue('h')[count] * mut.getValue('s');");
+			}
+		}
+		ind.setValue('fitness', product(fit_vector));
+	}
+}
+
+// kill all parents in all subpopulations each generation
+survival(){
+	return(individual.age == 0);
+}
+
+// general reproduction rules for diploid population
+reproduction(p1) {
+	if((community.tick > BURN-1) & (community.tick < BURN + 2) ) {
+		inds = p1.individuals;
+		fitnesses = pmax(0.0, c(inds.getValue('fitness')));
+		parents1 = sample(inds, Kdip, replace=T, weights=fitnesses);
+		parents2 = sample(inds, Kdip, replace=T, weights=fitnesses);
+		for (i in seqLen(Kdip))
+			p1.addCrossed(parents1[i], parents2[i]);
+		self.active = 0;
+	}
+}
+
+reproduction(p2) {
+	if((community.tick > BURN-1) & (community.tick < BURN + 2) ) {
+		inds = p2.individuals;
+		fitnesses = pmax(0.0, c(inds.getValue('fitness')));
+		parents1 = sample(inds, Kdip, replace=T, weights=fitnesses);
+		parents2 = sample(inds, Kdip, replace=T, weights=fitnesses);
+		for (i in seqLen(Kdip))
+			p2.addCrossed(parents1[i], parents2[i]);
+		self.active = 0;
+	}
+}
+
+// after we form the tetraploid pops, we want to stop simulating the diploid pop (which we don't sample)
+// to do so, we kill all the individuals and control reproduction earlier in the script
+BURN+1 late() {
+	sim.killIndividuals(p1.individuals);
+	sim.killIndividuals(p2.individuals);
+}
+
+// general reproduction rules for the tetraploid population
+// we need to do this manually to properly recombine and tag chromosomes
+reproduction(p4){
+	if (community.tick >= BURN+T1_GEN){ // burn_in + T1
+		// sample parents for reproduction, this model pop-size is constant at K
+		inds = p4.individuals;
+		fitnesses = pmax(0.0, c(inds.getValue('fitness')));
+		parents1 = sample(inds, K_tet_F, replace=T, weights=fitnesses);
+		parents2 = sample(inds, K_tet_F, replace=T, weights=fitnesses);
+		
+		//reproduction for each offspring
+		for (j in seqLen(K_tet_F))
+		{
+			selfing = sample(c(0,1), 1, F, c((1-self_rate), self_rate));
+			if(selfing == 1){
+				parents2[j] = parents1[j] ;
+			}
+			
+			p1_chroms = c(parents1[j].genomes, sim.subpopulations[2].individuals[parents1[j].tag].genomes);
+			p2_chroms = c(parents2[j].genomes, sim.subpopulations[2].individuals[parents2[j].tag].genomes);
+			
+			//randomize recombination order for allotetraploids
+			p1_order = c(sample(c(0,1), 2), sample(c(2,3),2));
+			p2_order = c(sample(c(0,1), 2), sample(c(2,3),2));
+			
+			//draw breakpoints and recombine for first pair
+			breakpoints1 = sim.chromosome.drawBreakpoints();
+			breakpoints2 = sim.chromosome.drawBreakpoints();
+			offspring = p4.addRecombinant(p1_chroms[p1_order[0]], p1_chroms[p1_order[1]], breakpoints1, p2_chroms[p2_order[0]], p2_chroms[p2_order[1]], breakpoints2, randomizeStrands = F);
+			
+			//draw breakpoints and recombine for second pair
+			breakpoints1 = sim.chromosome.drawBreakpoints();
+			breakpoints2 = sim.chromosome.drawBreakpoints();
+			other = p3.addRecombinant(p1_chroms[p1_order[2]], p1_chroms[p1_order[3]], breakpoints1, p2_chroms[p2_order[2]], p2_chroms[p2_order[3]], breakpoints2, randomizeStrands = F);
+			
+			//increase tag number and set
+			defineGlobal("c_tag", (c_tag+1.0));
+			offspring.tagF = c_tag;
+			other.tagF = c_tag;
+		}
+		
+		//this is to change reproduction to only once per generation
+		self.active = 0;
+	}
+	
+	else if (community.tick > BURN+1){ // burn_in + 1
+		// sample parents for reproduction, this model pop-size is constant at K
+		inds = p4.individuals;
+		fitnesses = pmax(0.0, c(inds.getValue('fitness')));
+		parents1 = sample(inds, K_tet_0, replace=T, weights=fitnesses);
+		parents2 = sample(inds, K_tet_0, replace=T, weights=fitnesses);
+		
+		//reproduction for each offspring
+		for (j in seqLen(K_tet_0))
+		{
+			selfing = sample(c(0,1), 1, F, c((1-self_rate), self_rate));
+			if(selfing == 1){
+				parents2[j] = parents1[j] ;
+			}
+			
+			p1_chroms = c(parents1[j].genomes, sim.subpopulations[2].individuals[parents1[j].tag].genomes);
+			p2_chroms = c(parents2[j].genomes, sim.subpopulations[2].individuals[parents2[j].tag].genomes);
+			
+			//randomize recombination order for allotetraploids
+			p1_order = c(sample(c(0,1), 2), sample(c(2,3),2));
+			p2_order = c(sample(c(0,1), 2), sample(c(2,3),2));
+			
+			//draw breakpoints and recombine for first pair
+			breakpoints1 = sim.chromosome.drawBreakpoints();
+			breakpoints2 = sim.chromosome.drawBreakpoints();
+			offspring = p4.addRecombinant(p1_chroms[p1_order[0]], p1_chroms[p1_order[1]], breakpoints1, p2_chroms[p2_order[0]], p2_chroms[p2_order[1]], breakpoints2, randomizeStrands = F);
+			
+			//draw breakpoints and recombine for second pair
+			breakpoints1 = sim.chromosome.drawBreakpoints();
+			breakpoints2 = sim.chromosome.drawBreakpoints();
+			other = p3.addRecombinant(p1_chroms[p1_order[2]], p1_chroms[p1_order[3]], breakpoints1, p2_chroms[p2_order[2]], p2_chroms[p2_order[3]], breakpoints2, randomizeStrands = F);
+			
+			//increase tag number and set
+			defineGlobal("c_tag", (c_tag+1.0));
+			offspring.tagF = c_tag;
+			other.tagF = c_tag;
+		}
+		
+		//this is to change reproduction to only once per generation
+		self.active = 0;
+	}
+}
+
+
+// Reproduction rule to create tetraploid population
+reproduction() {
+	// create the autotetraploid population from the diploid population
+	if (community.tick == BURN + 1) {
+		inds_p1 = p1.individuals;
+		inds_p2 = p2.individuals;
+		
+		fitnesses_p1 = pmax(0.0, c(inds_p1.getValue('fitness')));
+		fitnesses_p2 = pmax(0.0, c(inds_p2.getValue('fitness')));
+		
+		parents1 = sample(inds_p1, K_tet_0, replace=T, weights=fitnesses_p1);
+		parents2 = sample(inds_p2, K_tet_0, replace=T, weights=fitnesses_p2);
+		for (j in seqLen(K_tet_0)){
+			p1_chroms = c(parents1[j].genomes, parents1[j].genomes);
+			p2_chroms = c(parents2[j].genomes, parents2[j].genomes);
+			
+			//randomize whether WGD happened before or after meiosis 
+			p1_order = sample(seqLen(4), 4);
+			p2_order = sample(seqLen(4), 4);
+			
+			//draw breakpoints and recombine for first pair
+			breakpoints1 = sim.chromosome.drawBreakpoints();
+			breakpoints2 = sim.chromosome.drawBreakpoints();
+			other = p3.addRecombinant(p1_chroms[p1_order[0]], p1_chroms[p1_order[1]], breakpoints1, p1_chroms[p1_order[2]], p1_chroms[p1_order[3]], breakpoints2, randomizeStrands=F);
+			
+			//draw breakpoints and recombine for second pair
+			breakpoints1 = sim.chromosome.drawBreakpoints();
+			breakpoints2 = sim.chromosome.drawBreakpoints();
+			offspring = p4.addRecombinant(p2_chroms[p2_order[0]], p2_chroms[p2_order[1]], breakpoints1, p2_chroms[p2_order[2]], p2_chroms[p2_order[3]], breakpoints2, randomizeStrands=F);
+			
+			//increase tag number and set
+			defineGlobal("c_tag", (c_tag+1.0));
+			offspring.tagF = c_tag;
+			other.tagF = c_tag;
+		}
+		
+		//this is to change reproduction to only once per generation
+		self.active = 0;
+	}
+}
+
+//to save time we do this every 100 gens, and check to make sure the tags are accurate using a lookup rather than the sort, do it first/early/late for making sure they're set for every step/calc
+//do a quick check to make sure tags are right every 100 gens
+BURN + 101: first (){ // #burn-in + auto_begin + 100 + 1
+	check_ticks = seq(from=BURN+1,to=BURN+T1_GEN+T2_GEN,by=100); // #burn_in + auto_begin + 100 + 1, #End_of_sim + 1
+	if(match(community.tick, check_ticks) >= 0){
+		for (ind in sim.subpopulations[3].individuals)
+			if (ind.tagF != sim.subpopulations[2].individuals[ind.tag].tagF)
+				stop("first(): error for individual " + ind.index);
+	}
+}
+
+//do a quick check to make sure tags are right every 100 gens
+BURN + 101: early (){ // #burn-in + auto_begin + 100 + 1
+	check_ticks = seq(from=BURN+1,to=BURN+T1_GEN+T2_GEN,by=100); // #burn_in + auto_begin + 100 + 1, #End_of_sim + 1
+	if(match(community.tick, check_ticks) >= 0){
+		for (ind in sim.subpopulations[3].individuals)
+			if (ind.tagF != sim.subpopulations[2].individuals[ind.tag].tagF)
+				stop("early(): error for individual " + ind.index);
+	}
+}
+
+//do a quick check to make sure tags are right every 100 gens
+BURN + 101: late (){// #burn-in + auto_begin + 100 + 1
+	check_ticks = seq(from=BURN+1,to=BURN+T1_GEN+T2_GEN,by=100); // #burn_in + auto_begin + 100 + 1, #End_of_sim + 1
+	if(match(community.tick, check_ticks) >= 0){
+		for (ind in sim.subpopulations[3].individuals)
+			if (ind.tagF != sim.subpopulations[2].individuals[ind.tag].tagF)
+				stop("late(): error for individual " + ind.index);
+	}
+}
+
+BURN+T1_GEN+T2_GEN late() {
+	sim.treeSeqOutput("trees/final/allo_final_Q_"+Q+"_REP_"+rep+"_ID_"+id+".trees");
+}

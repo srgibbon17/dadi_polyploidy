@@ -1,0 +1,4 @@
+# SLiM_simulations
+SLiM simulation scripts for validating the DFE inference implemented in dadi. 
+
+Each subdirectory (SLiM_4.3 and SLiM_5) contain six total scripts split into three pairs. The scripts are identical with the only changes made for compatibility with different SLiM versions (e.g., changing 'genomes' to 'haplosomes'). There are three models: autotetraploids, allotetraploids, and autotetraploids with diploid progenitors. For each model, there are two scripts - one for a diploid, WF burnin and a second for modeling the tetraploids in a nonWF model. Each script can be run in SLiMgui or from command line. The scripts are (relatively) well commented and include example commands at the top of each script for running from the command line.

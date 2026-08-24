@@ -1,0 +1,18 @@
+configs:
+  # Example of a lognormal mixture joint DFE
+  - name: "lognormal_joint_mixture_DFE_ex"
+    DFE_type: "mixture" # 1d, 2d, or mixture
+    theta_ratio: 2.5 # ratio of theta_ns to theta_syn
+    initial_params: [1.35, 2.6, 0.01, 0.075] # params for DFE model; here [mu, sigma, rho, w]
+    lower_bounds: [0.01, 0.01, 0.0001, 0.0001] # lower bounds for params
+    upper_bounds: [10, 10, 0.9999, 1] # upper bounds for params; avoid rho=1
+    fixed_params: [null, null, 0, null] # fixed params for optimization; fix rho=0 for mixture model
+    sel_dist_1d: "lognormal" # options are "gamma", "beta", "exponential", "lognormal", "normal"
+    sel_dist_2d: "lognormal" # options are "gamma" or "lognormal"
+    num_opts: 100 # maximum number of optimizations to run
+    ll_tol: 0.001 # relative ll tolerance for convergence to stop optimization
+    output_dir: "dfe_inference/lognormal_joint_ex" # output directory
+    dfe_param_names: ["mu", "sigma", "rho", "w"] # names of the DFE parameters
+
+
+  

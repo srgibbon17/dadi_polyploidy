@@ -1,0 +1,116 @@
+/* 
+command line usage example (all parameters have defaults too): 
+slim -d Qfactor=10 -d L=2e5 -d BURNIN=10 -d DIP_DIV=1 -d REP=1 -d ID=1 -d SEED=365 allo_WF_burn.slim
+*/ 
+
+// WF burnin and diploid divergence for allotetraploid simulations
+// see accompanying nonWF script for much more detail
+
+initialize() {
+	// parameters specified at command line with defaults
+	// scaling factor to speed up simulations
+	if (exists("Qfactor")){
+		defineConstant("Q", Qfactor);
+	} else{
+		defineConstant("Q", 1000);
+	}
+	
+	// constants for file management
+	if (exists("REP")){
+		defineConstant("rep", REP);
+	} else{
+		defineConstant("rep", 1);
+	}
+	if (exists("ID")){
+		defineConstant("id", ID);
+	} else{
+		defineConstant("id", 1);
+	}
+	
+	// set the seed, pulling in the rep and id to differentiate among runs
+	if (exists("SEED")){
+		setSeed(asInteger(SEED + id * rep + 123));
+	} else{
+		setSeed(asInteger(42 + id * rep + 123));
+	}
+	
+	// diffusion scaled time for diploid progenitor divergence
+	if (exists("DIP_DIV")){
+		defineConstant("dip_div", DIP_DIV);
+	} else{
+		defineConstant("dip_div", 1.0);
+	}
+	
+	// define burnin period (in terms of N generations)
+	if (exists("BURNIN")){
+		defineConstant("burnin", BURNIN);
+	} else{
+		defineConstant("burnin", 20.0);
+	}
+	
+	defineConstant("K", asInteger(round(161744.0/Q))); // population size
+	
+	initializeMutationRate((2.5/3.5)*7e-9*Q); // from stdpopsim catalog for Arabidopsis thaliana
+	
+	// m1 mutation type: gamma DFE, additive dominance from Huber 2018
+	initializeMutationType("m1", 0.5, "g", -0.00021600000000000002 * Q, 0.27);
+	
+	// define the genome length
+	if (exists("L")){
+		defineConstant("g_size", L - 1);
+	} else{
+		defineConstant("g_size", 5e3 - 1);
+	}
+	
+	
+	//initialize genome and recombination rate
+	initializeGenomicElementType("g1", m1, 1);
+	// SRG: switch the commenting below to add a genome with genic and intergenic or exonic and intronic regions	
+	initializeGenomicElement(g1, 0, g_size);
+	//defineConstant("L0", 200e3); // between genes
+	//defineConstant("L1", 1e3); // gene length
+	//for (start in seq(from=L0, to=g_size-(L0+L1), by=(L0+L1)))
+	//	initializeGenomicElement(g1, start, (start+L1)-1);
+	
+	initializeRecombinationRate((1-(1-2*3.676138452842427e-08)^Q)/2);
+	
+	m1.convertToSubstitution = T;
+	
+	// use tree sequence recording to check for coalesence
+	initializeTreeSeq();
+
+}
+
+// create a population 
+1 early() {
+	sim.addSubpop("p1", K);
+}
+
+// create the second diploid population after the burnin
+asInteger(burnin*K) early() {
+	sim.addSubpopSplit("p2", K, p1);
+}
+
+
+// monitor fitness
+1:asInteger(burnin*K) early() {
+	if(community.tick % 10000 == 0) {
+		print(community.tick);
+		print(mean(p1.cachedFitness(NULL)));
+	}
+}
+
+asInteger(burnin*K):asInteger((burnin+2*dip_div)*K) early() {
+	if(community.tick % 10000 == 0) {
+		print(community.tick);
+		print(mean(p1.cachedFitness(NULL)));
+		print(mean(p2.cachedFitness(NULL)));
+	}
+}
+
+// output after burnin and diploid divergence 
+asInteger((burnin+2*dip_div)*K) late() {
+	sim.treeSeqOutput("trees/burnin/allo_burnin_Q_"+Q+"_REP_"+rep+"_ID_"+id+".trees");
+}
+
+

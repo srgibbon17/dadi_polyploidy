@@ -1,0 +1,23 @@
+# It can be convenient to specify many demographic models to infer for the same data 
+# for comparing model fit, running LRTs or comparing AIC, etc. 
+# This is done by just specifying multiple configs in the same YAML file.
+
+configs:
+  # Allotetraploid example configuration
+  - name: "three_epoch_ex"
+    ploidyType: "allotetraploid" # options are "autotetraploid", "allotetraploid"
+    model: "three_epoch" # model to infer; see list of models in dadi_demographic_inference.py
+    initial_params: [0.2, 0.3, 0.25, 0.9, 0] # T1, T2, nu1, nu2, H
+    lower_bounds: [0.001, 0.001, 0.01, 0.01, 0] 
+    upper_bounds: [10, 10, 10, 10, 10]
+    fixed_params: [null, null, null, null, 0] # specify any fixed parameters here
+    pts_l: [261, 271, 281] # specify grid points for dadi
+    collapsed_ids: [1,2] # which populations to collapse (if any); for allotetraploids this collapses the resulting SFS
+    output_dir: "3epoch_collapsed" # output directory
+    num_opts: 50 # maximum number of optimizations to run
+    ns_list: [80, 80] # number of haploids from each subgenome/population
+    func_tol: 0.0001 # relative func tolerance for convergence for a given optimization
+    param_tol: 0.0001 # relative param tolerance for convergence for a given optimization
+    ll_tol: 0.001 # relative ll tolerance for convergence to halt optimizations
+    num_reps: 25 # number of simulated tree files used to build the SFS; 
+                 # e.g., if we have {name}_ID_1.trees, ..., {name}_ID_10.trees, we set this to 10

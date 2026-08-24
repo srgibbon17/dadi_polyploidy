@@ -1,0 +1,17 @@
+configs:
+  # Example for a gamma DFE with a 1D cache for autotetraploids
+  - name: "gamma_DFE_ex"
+    DFE_type: "1d" # 1d, 2d, or mixture
+    theta_ratio: 2.5 # ratio of theta_ns to theta_syn
+    initial_params: [0.27, 130] # params for DFE model; in this case [shape, scale]
+    lower_bounds: [0.01, 0.01] # lower bounds for params
+    upper_bounds: [10, 10000] # upper bounds for params
+    fixed_params: null # specify any fixed parameter values
+    sel_dist_1d: "gamma" # options are "gamma", "beta", "exponential", "lognormal", "normal"
+    num_opts: 100 # maximum number of optimizations to run
+    ll_tol: 0.001 # relative ll tolerance for convergence to stop optimization
+    output_dir: "dfe_inference/gamma_ex" # output directory
+    dfe_param_names: ["shape", "scale"] # names of the DFE parameters
+
+
+  
