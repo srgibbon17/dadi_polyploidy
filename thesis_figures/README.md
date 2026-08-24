@@ -19,4 +19,4 @@ Figure numbers refer to the numbering in my (SRG's) honors thesis.
   - See README in this folder for more details
 - `SLiM_DFE_results`
   - Note: These figures are _not_ included in my thesis, but a few of the figures are included in the edited version of the thesis/early manuscript draft. 
-  - 
+  - See README in this folder for more details
