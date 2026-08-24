@@ -1,0 +1,77 @@
+# It is often convenient to run multiple inference configurations on 
+# the same input data (e.g. for nested inferences with a LRT)
+
+configs:
+  # Config 1: bottlegrowth with dips, no misid, large ns
+  - name: "three_epoch_1"
+    ploidyType: "allotetraploid"
+    model: "three_epoch"
+    initial_params: [0.2, 0.3, 0.25, 0.9, 0]  # T1, T2, nu1, nu2, H
+    lower_bounds: [0.001, 0.001, 0.01, 0.01, 0]
+    upper_bounds: [10, 10, 10, 10, 10]
+    fixed_params: [null, null, null, null, 0]
+    pts_l: [261, 271, 281]
+    collapsed_ids: [1,2]
+    output_dir: "3epoch_large_collapsed"
+    num_opts: 50
+    ns_list: [80, 80] # number of haploids from each "subpopulation"
+    func_tol: 0.0001
+    param_tol: 0.0001
+    ll_tol: 0.001
+    num_reps: 25 # number of simulated tree files to "look" for
+    
+  # Config 2: bottlegrowth with dips, no misid, small ns
+  - name: "three_epoch_2"
+    ploidyType: "allotetraploid"
+    model: "three_epoch"
+    initial_params: [0.2, 0.3, 0.25, 0.9, 0]  # T1, T2, nu1, nu2, H
+    lower_bounds: [0.001, 0.001, 0.01, 0.01, 0]
+    upper_bounds: [10, 10, 10, 10, 10]
+    fixed_params: [null, null, null, null, 0]
+    pts_l: [101, 111, 121]
+    collapsed_ids: [1,2]
+    output_dir: "3epoch_small_collapsed"
+    num_opts: 50
+    ns_list: [12, 12] # number of haploids from each "subpopulation"
+    func_tol: 0.0001
+    param_tol: 0.0001
+    ll_tol: 0.001
+    num_reps: 25 # number of simulated tree files to "look" for
+    
+  # Config 3: bottlegrowth with dips, with misid, large ns
+  - name: "three_epoch_3"
+    ploidyType: "allotetraploid"
+    model: "three_epoch"
+    initial_params: [0.2, 0.3, 0.25, 0.9, 0, 0.01]  # T1, T2, nu1, nu2, H, misid
+    lower_bounds: [0.001, 0.001, 0.01, 0.01, 0, 0]
+    upper_bounds: [10, 10, 10, 10, 10, 1]
+    fixed_params: [null, null, null, null, 0, null]
+    pts_l: [261, 271, 281]
+    collapsed_ids: [1,2]
+    output_dir: "3epoch_misid_large_collapsed"
+    num_opts: 50
+    ns_list: [80, 80] # number of haploids from each "subpopulation"
+    func_tol: 0.0001
+    param_tol: 0.0001
+    ll_tol: 0.001
+    num_reps: 25 # number of simulated tree files to "look" for
+    misid: True
+    
+  # Config 4: bottlegrowth with dips, with misid, small ns
+  - name: "three_epoch_4"
+    ploidyType: "allotetraploid"
+    model: "three_epoch"
+    initial_params: [0.2, 0.3, 0.25, 0.9, 0, 0]  # T1, T2, nu1, nu2, H, misid
+    lower_bounds: [0.001, 0.001, 0.01, 0.01, 0, 0.01]
+    upper_bounds: [10, 10, 10, 10, 10, 1]
+    fixed_params: [null, null, null, null, 0, null]
+    pts_l: [101, 111, 121]
+    collapsed_ids: [1,2]
+    output_dir: "3epoch_misid_small_collapsed"
+    num_opts: 50
+    ns_list: [12, 12] # number of haploids from each "subpopulation"
+    func_tol: 0.0001
+    param_tol: 0.0001
+    ll_tol: 0.001
+    num_reps: 25 # number of simulated tree files to "look" for
+    misid: True

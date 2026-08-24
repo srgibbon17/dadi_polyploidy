@@ -1,0 +1,8 @@
+ploidyType: "allotetraploid"
+model: "two_epoch"
+nested_model: "two_epoch_noHE"
+pts_l: [101, 111, 121] 
+eps_l: [0.01, 0.001, 0.0001]
+nested_indices: [2] 
+weights: [0.5, 0.5] 
+true_params: [.3, .75, .02] 

@@ -1,0 +1,78 @@
+# It is often convenient to run multiple inference configurations on 
+# the same input data (e.g. for nested inferences with a LRT)
+
+configs:
+  # Config 1: bottlegrowth with dips, no misid, large ns
+  - name: "bottlegrowth_dip_size_change_1"
+    ploidyType: "autotetraploid"
+    model: "bottlegrowth_dip_size_change_asym_mig"
+    initial_params: [0.15, 0.15, 0.3, 0.7, 0.8, 0.0, 2.0]  # T_WGD, T_dip, nuB, nuF, nu_dip, m12, m21
+    lower_bounds: [0.001, 0.001, 0.01, 0.01, 0.01, 0.0, 0.01]
+    upper_bounds: [10, 10, 10, 10, 10, 10, 10]
+    fixed_params: [null, null, null, null, null, 0.0, null]
+    pts_l: [201, 211, 221]
+    output_dir: "bg_sc_large"
+    num_opts: 50
+    ns_list: [80, 48, 48] # number of haploids from each "subpopulation"
+    collapsed_ids: [2, 3] # collapse the SFS for the two autotetraploid "subpopulations"
+    func_tol: 0.0001
+    param_tol: 0.0001
+    ll_tol: 0.001
+    num_reps: 10 # number of simulated tree files to "look" for
+    
+  # Config 2: bottlegrowth with dips, no misid, small ns
+  - name: "bottlegrowth_dip_size_change_2"
+    ploidyType: "autotetraploid"
+    model: "bottlegrowth_dip_size_change_asym_mig"
+    initial_params: [0.15, 0.15, 0.3, 0.7, 0.8, 0.0, 2.0]  # T_WGD, T_dip, nuB, nuF, nu_dip, m12, m21
+    lower_bounds: [0.001, 0.001, 0.01, 0.01, 0.01, 0.0, 0.01]
+    upper_bounds: [10, 10, 10, 10, 10, 10, 10]
+    fixed_params: [null, null, null, null, null, 0.0, null]
+    pts_l: [101, 111, 121]
+    output_dir: "bg_sc_small"
+    num_opts: 50
+    ns_list: [20, 12, 12] # number of haploids from each "subpopulation"
+    collapsed_ids: [2, 3] # collapse the SFS for the two autotetraploid "subpopulations"
+    func_tol: 0.0001
+    param_tol: 0.0001
+    ll_tol: 0.001
+    num_reps: 10 # number of simulated tree files to "look" for
+    
+  # Config 3: bottlegrowth with dips, with misid, large ns
+  - name: "bottlegrowth_dip_size_change_3"
+    ploidyType: "autotetraploid"
+    model: "bottlegrowth_dip_size_change_asym_mig"
+    initial_params: [0.15, 0.15, 0.3, 0.7, 0.8, 0.0, 2.0, 0.01]  # T_WGD, T_dip, nuB, nuF, nu_dip, m12, m21, misid
+    lower_bounds: [0.001, 0.001, 0.01, 0.01, 0.01, 0.0, 0.01, 0.0001]
+    upper_bounds: [10, 10, 10, 10, 10, 10, 10, 1]
+    fixed_params: [null, null, null, null, null, 0.0, null, null]
+    pts_l: [201, 211, 221]
+    output_dir: "bg_sc_misid_large"
+    num_opts: 50
+    ns_list: [80, 48, 48] # number of haploids from each "subpopulation"
+    collapsed_ids: [2, 3] # collapse the SFS for the two autotetraploid "subpopulations"
+    func_tol: 0.0001
+    param_tol: 0.0001
+    ll_tol: 0.001
+    num_reps: 10 # number of simulated tree files to "look" for
+    misid: True
+    
+  # Config 4: bottlegrowth with dips, with misid, small ns
+  - name: "bottlegrowth_dip_size_change_4"
+    ploidyType: "autotetraploid"
+    model: "bottlegrowth_dip_size_change_asym_mig"
+    initial_params: [0.15, 0.15, 0.3, 0.7, 0.8, 0.0, 2.0, 0.01]  # T_WGD, T_dip, nuB, nuF, nu_dip, m12, m21, misid
+    lower_bounds: [0.001, 0.001, 0.01, 0.01, 0.01, 0.0, 0.01, 0.0001]
+    upper_bounds: [10, 10, 10, 10, 10, 10, 10, 1]
+    fixed_params: [null, null, null, null, null, 0.0, null, null]
+    pts_l: [101, 111, 121]
+    output_dir: "bg_sc_misid_small"
+    num_opts: 50
+    ns_list: [20, 12, 12] # number of haploids from each "subpopulation"
+    collapsed_ids: [2, 3] # collapse the SFS for the two autotetraploid "subpopulations"
+    func_tol: 0.0001
+    param_tol: 0.0001
+    ll_tol: 0.001
+    num_reps: 10 # number of simulated tree files to "look" for
+    misid: True
+    

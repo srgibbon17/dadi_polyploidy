@@ -1,0 +1,39 @@
+==========================================
+Start: Sun Jul  5 07:53:23 MST 2026
+==========================================
+Running inference on /xdisk/rgutenk/sgibbon/SLiM/High_r_production/Autotetraploids/Joint_DFE_migration/simulations2/trees/final/auto_final_Q_10_REP_5_ID_1.trees
+Running inference for config: bottlegrowth_dip_size_change_1
+10943.060957688112 10943.244415148747 10943.76344186328
+Optimization 10 converged within tolerance of 0.001
+Finished inference in 4804.72652554512 seconds
+Finished optimization for /xdisk/rgutenk/sgibbon/SLiM/High_r_production/Autotetraploids/Joint_DFE_migration/simulations2/trees/final/auto_final_Q_10_REP_5_ID_1.trees
+Success: True
+Optimization results saved to bg_sc_large/optimization_auto_final_Q_10_REP_5_ID_1.txt
+Error: None
+Running inference for config: bottlegrowth_dip_size_change_2
+1523.3854810511257 1523.406164660831 1523.4422110429161
+Optimization 10 converged within tolerance of 0.001
+Finished inference in 1883.990805864334 seconds
+Finished optimization for /xdisk/rgutenk/sgibbon/SLiM/High_r_production/Autotetraploids/Joint_DFE_migration/simulations2/trees/final/auto_final_Q_10_REP_5_ID_1.trees
+Success: True
+Optimization results saved to bg_sc_small/optimization_auto_final_Q_10_REP_5_ID_1.txt
+Error: None
+Running inference for config: bottlegrowth_dip_size_change_3
+10851.021709667151 10851.044948004073 10851.611914215377
+Optimization 10 converged within tolerance of 0.001
+Finished inference in 4944.427292346954 seconds
+Finished optimization for /xdisk/rgutenk/sgibbon/SLiM/High_r_production/Autotetraploids/Joint_DFE_migration/simulations2/trees/final/auto_final_Q_10_REP_5_ID_1.trees
+Success: True
+Optimization results saved to bg_sc_misid_large/optimization_auto_final_Q_10_REP_5_ID_1.txt
+Error: None
+Running inference for config: bottlegrowth_dip_size_change_4
+1508.9402609429703 1508.9666486682095 1509.1658685470697
+Optimization 10 converged within tolerance of 0.001
+Finished inference in 1329.2617037296295 seconds
+Finished optimization for /xdisk/rgutenk/sgibbon/SLiM/High_r_production/Autotetraploids/Joint_DFE_migration/simulations2/trees/final/auto_final_Q_10_REP_5_ID_1.trees
+Success: True
+Optimization results saved to bg_sc_misid_small/optimization_auto_final_Q_10_REP_5_ID_1.txt
+Error: None
+==========================================
+Job completed at: Sun Jul  5 11:29:28 MST 2026
+==========================================

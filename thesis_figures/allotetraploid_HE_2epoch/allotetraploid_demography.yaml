@@ -1,0 +1,25 @@
+time_units: generations
+generation_time: 1
+demes:
+- name: dip_anc
+  epochs:
+  - {end_time: 26000.0, start_size: 10000}
+- name: dip_progenitorA
+  ancestors: [dip_anc]
+  epochs:
+  - {end_time: 6000.0, start_size: 10000}
+- name: dip_progenitorB
+  ancestors: [dip_anc]
+  epochs:
+  - {end_time: 6000.0, start_size: 10000}
+- name: alloA
+  ancestors: [dip_progenitorA]
+  epochs:
+  - {end_time: 0, start_size: 7500, size_function: linear}
+- name: alloB
+  ancestors: [dip_progenitorB]
+  epochs:
+  - {end_time: 0, start_size: 7500, size_function: linear}
+migrations:
+- demes: [alloA, alloB]
+  rate: 1e-05

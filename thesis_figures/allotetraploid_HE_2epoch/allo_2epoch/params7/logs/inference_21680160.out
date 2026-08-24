@@ -1,0 +1,738 @@
+==========================================
+Start: Thu Apr  2 18:51:34 MST 2026
+==========================================
+Running nested uncertainties:
+Using nested model for GIM: two_epoch_noHE
+Processing: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/dadi_inference_results/allo_2epoch/params7/Folded_nested/optimization_allo_2epoch_T0.3_nu0.75_H0.2_master42_rep0.txt
+gim_param_names:
+['T_WGD', 'nu']
+gim_best_params:
+[0.0090657304015569, 0.1743444800482853]
+['T_WGD', 'nu']
+uncerts:
+[3.84397578e-04 8.42482033e-03 5.22758858e+01]
+uncerts:
+[5.92064454e-05 1.93796476e-03 4.85138418e+01]
+uncerts:
+[1.38591296e-03 3.70718268e-04 6.23514336e+01]
+gim_uncerts:
+[array([3.84397578e-04, 8.42482033e-03, 5.22758858e+01]), array([5.92064454e-05, 1.93796476e-03, 4.85138418e+01]), array([1.38591296e-03, 3.70718268e-04, 6.23514336e+01])]
+Processing: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/dadi_inference_results/allo_2epoch/params7/Folded_nested/optimization_allo_2epoch_T0.3_nu0.75_H0.2_master42_rep1.txt
+gim_param_names:
+['T_WGD', 'nu']
+gim_best_params:
+[0.001, 0.0546292453472223]
+['T_WGD', 'nu']
+uncerts:
+[  0.25347732  13.01984491 193.00994396]
+uncerts:
+[6.83297912e-03 3.48533094e-01 6.18639192e+01]
+uncerts:
+[2.52988223e-04 1.44789389e-02 6.09523187e+01]
+gim_uncerts:
+[array([  0.25347732,  13.01984491, 193.00994396]), array([6.83297912e-03, 3.48533094e-01, 6.18639192e+01]), array([2.52988223e-04, 1.44789389e-02, 6.09523187e+01])]
+Processing: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/dadi_inference_results/allo_2epoch/params7/Folded_nested/optimization_allo_2epoch_T0.3_nu0.75_H0.2_master42_rep10.txt
+gim_param_names:
+['T_WGD', 'nu']
+gim_best_params:
+[0.001, 0.0370797936370111]
+['T_WGD', 'nu']
+uncerts:
+[  0.58014407  20.4811991  375.60256465]
+uncerts:
+[1.20957983e-02 4.29359862e-01 6.53675348e+01]
+uncerts:
+[1.78700578e-04 7.78553424e-03 6.20549911e+01]
+gim_uncerts:
+[array([  0.58014407,  20.4811991 , 375.60256465]), array([1.20957983e-02, 4.29359862e-01, 6.53675348e+01]), array([1.78700578e-04, 7.78553424e-03, 6.20549911e+01])]
+Processing: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/dadi_inference_results/allo_2epoch/params7/Folded_nested/optimization_allo_2epoch_T0.3_nu0.75_H0.2_master42_rep11.txt
+gim_param_names:
+['T_WGD', 'nu']
+gim_best_params:
+[0.001, 0.03492698306872]
+['T_WGD', 'nu']
+uncerts:
+[4.04645175e-02 1.34697588e+00 7.76906970e+01]
+uncerts:
+[1.02022598e-02 3.34095750e-01 8.91635383e+01]
+uncerts:
+[1.55557869e-03 5.12475525e-02 7.31680482e+01]
+gim_uncerts:
+[array([4.04645175e-02, 1.34697588e+00, 7.76906970e+01]), array([1.02022598e-02, 3.34095750e-01, 8.91635383e+01]), array([1.55557869e-03, 5.12475525e-02, 7.31680482e+01])]
+Processing: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/dadi_inference_results/allo_2epoch/params7/Folded_nested/optimization_allo_2epoch_T0.3_nu0.75_H0.2_master42_rep12.txt
+gim_param_names:
+['T_WGD', 'nu']
+gim_best_params:
+[0.001, 0.0461166664213128]
+['T_WGD', 'nu']
+uncerts:
+[  0.16470676   7.15487304 134.89785138]
+uncerts:
+[4.46800058e-03 1.90888213e-01 5.16093042e+01]
+uncerts:
+[4.06098460e-04 1.35958662e-02 4.72607447e+01]
+gim_uncerts:
+[array([  0.16470676,   7.15487304, 134.89785138]), array([4.46800058e-03, 1.90888213e-01, 5.16093042e+01]), array([4.06098460e-04, 1.35958662e-02, 4.72607447e+01])]
+Processing: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/dadi_inference_results/allo_2epoch/params7/Folded_nested/optimization_allo_2epoch_T0.3_nu0.75_H0.2_master42_rep13.txt
+gim_param_names:
+['T_WGD', 'nu']
+gim_best_params:
+[0.001, 0.0493417236465893]
+['T_WGD', 'nu']
+uncerts:
+[1.04656211e-04 5.32044658e-03 5.45830982e+01]
+uncerts:
+[6.96519004e-03 3.19763036e-01 6.11096453e+01]
+uncerts:
+[1.03251615e-03 4.48463638e-02 5.57010788e+01]
+gim_uncerts:
+[array([1.04656211e-04, 5.32044658e-03, 5.45830982e+01]), array([6.96519004e-03, 3.19763036e-01, 6.11096453e+01]), array([1.03251615e-03, 4.48463638e-02, 5.57010788e+01])]
+Processing: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/dadi_inference_results/allo_2epoch/params7/Folded_nested/optimization_allo_2epoch_T0.3_nu0.75_H0.2_master42_rep14.txt
+gim_param_names:
+['T_WGD', 'nu']
+gim_best_params:
+[0.001, 0.0460396890948039]
+['T_WGD', 'nu']
+uncerts:
+[  2.86027886 124.59164168 363.24308171]
+uncerts:
+[8.03302472e-03 3.45980259e-01 7.28926505e+01]
+uncerts:
+[8.81155163e-03 3.71288444e-01 7.30078362e+01]
+gim_uncerts:
+[array([  2.86027886, 124.59164168, 363.24308171]), array([8.03302472e-03, 3.45980259e-01, 7.28926505e+01]), array([8.81155163e-03, 3.71288444e-01, 7.30078362e+01])]
+Processing: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/dadi_inference_results/allo_2epoch/params7/Folded_nested/optimization_allo_2epoch_T0.3_nu0.75_H0.2_master42_rep15.txt
+gim_param_names:
+['T_WGD', 'nu']
+gim_best_params:
+[0.001, 0.0501684688388028]
+['T_WGD', 'nu']
+uncerts:
+[8.09880360e-05 3.66201315e-03 5.50731922e+01]
+uncerts:
+[5.77842686e-03 2.70394434e-01 6.50559644e+01]
+uncerts:
+[4.22496490e-04 2.17136305e-02 5.67683276e+01]
+gim_uncerts:
+[array([8.09880360e-05, 3.66201315e-03, 5.50731922e+01]), array([5.77842686e-03, 2.70394434e-01, 6.50559644e+01]), array([4.22496490e-04, 2.17136305e-02, 5.67683276e+01])]
+Processing: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/dadi_inference_results/allo_2epoch/params7/Folded_nested/optimization_allo_2epoch_T0.3_nu0.75_H0.2_master42_rep16.txt
+gim_param_names:
+['T_WGD', 'nu']
+gim_best_params:
+[0.001, 0.0390908770291944]
+['T_WGD', 'nu']
+uncerts:
+[  0.14604654   5.42308067 131.22026742]
+uncerts:
+[1.42816199e-02 5.27485563e-01 7.13510189e+01]
+uncerts:
+[1.89278829e-04 7.93986953e-03 6.45884056e+01]
+gim_uncerts:
+[array([  0.14604654,   5.42308067, 131.22026742]), array([1.42816199e-02, 5.27485563e-01, 7.13510189e+01]), array([1.89278829e-04, 7.93986953e-03, 6.45884056e+01])]
+Processing: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/dadi_inference_results/allo_2epoch/params7/Folded_nested/optimization_allo_2epoch_T0.3_nu0.75_H0.2_master42_rep17.txt
+gim_param_names:
+['T_WGD', 'nu']
+gim_best_params:
+[0.001, 0.0437355514210665]
+['T_WGD', 'nu']
+uncerts:
+[  0.29674733  12.25250491 226.95403254]
+uncerts:
+[2.06259590e-02 8.50567476e-01 7.20852832e+01]
+uncerts:
+[1.75181223e-04 8.35832379e-03 6.61677033e+01]
+gim_uncerts:
+[array([  0.29674733,  12.25250491, 226.95403254]), array([2.06259590e-02, 8.50567476e-01, 7.20852832e+01]), array([1.75181223e-04, 8.35832379e-03, 6.61677033e+01])]
+Processing: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/dadi_inference_results/allo_2epoch/params7/Folded_nested/optimization_allo_2epoch_T0.3_nu0.75_H0.2_master42_rep18.txt
+gim_param_names:
+['T_WGD', 'nu']
+gim_best_params:
+[0.001, 0.6839127655166556]
+['T_WGD', 'nu']
+uncerts:
+[2.52692555e-01 7.00329626e+01 5.35845679e+02]
+uncerts:
+[1.56274407e-02 2.95950396e+00 3.72473028e+01]
+uncerts:
+[5.30214407e-02 2.19639757e-01 1.95406436e+02]
+gim_uncerts:
+[array([2.52692555e-01, 7.00329626e+01, 5.35845679e+02]), array([1.56274407e-02, 2.95950396e+00, 3.72473028e+01]), array([5.30214407e-02, 2.19639757e-01, 1.95406436e+02])]
+Processing: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/dadi_inference_results/allo_2epoch/params7/Folded_nested/optimization_allo_2epoch_T0.3_nu0.75_H0.2_master42_rep19.txt
+gim_param_names:
+['T_WGD', 'nu']
+gim_best_params:
+[0.001, 0.0664841571632105]
+['T_WGD', 'nu']
+uncerts:
+[ 0.33212657 20.36579551 66.91676977]
+uncerts:
+[5.90210836e-03 3.65335915e-01 6.39942118e+01]
+uncerts:
+[2.30308998e-04 1.13003447e-02 6.08201548e+01]
+gim_uncerts:
+[array([ 0.33212657, 20.36579551, 66.91676977]), array([5.90210836e-03, 3.65335915e-01, 6.39942118e+01]), array([2.30308998e-04, 1.13003447e-02, 6.08201548e+01])]
+Processing: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/dadi_inference_results/allo_2epoch/params7/Folded_nested/optimization_allo_2epoch_T0.3_nu0.75_H0.2_master42_rep2.txt
+gim_param_names:
+['T_WGD', 'nu']
+gim_best_params:
+[0.001, 0.086916367133794]
+['T_WGD', 'nu']
+uncerts:
+[3.52472240e-01 2.79037084e+01 4.07037013e+02]
+uncerts:
+[2.49346976e-02 1.96100850e+00 5.86507766e+01]
+uncerts:
+[3.37610358e-04 1.71192691e-02 6.08457130e+01]
+gim_uncerts:
+[array([3.52472240e-01, 2.79037084e+01, 4.07037013e+02]), array([2.49346976e-02, 1.96100850e+00, 5.86507766e+01]), array([3.37610358e-04, 1.71192691e-02, 6.08457130e+01])]
+Processing: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/dadi_inference_results/allo_2epoch/params7/Folded_nested/optimization_allo_2epoch_T0.3_nu0.75_H0.2_master42_rep20.txt
+gim_param_names:
+['T_WGD', 'nu']
+gim_best_params:
+[0.001, 0.0439416521498412]
+['T_WGD', 'nu']
+uncerts:
+[  1.90584163  79.36277938 137.40217583]
+uncerts:
+[1.23234424e-02 5.08444094e-01 5.78659998e+01]
+uncerts:
+[1.68817562e-04 1.04842955e-02 5.68350637e+01]
+gim_uncerts:
+[array([  1.90584163,  79.36277938, 137.40217583]), array([1.23234424e-02, 5.08444094e-01, 5.78659998e+01]), array([1.68817562e-04, 1.04842955e-02, 5.68350637e+01])]
+Processing: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/dadi_inference_results/allo_2epoch/params7/Folded_nested/optimization_allo_2epoch_T0.3_nu0.75_H0.2_master42_rep21.txt
+gim_param_names:
+['T_WGD', 'nu']
+gim_best_params:
+[0.001, 0.0483490792873621]
+['T_WGD', 'nu']
+uncerts:
+[ 0.20774158  9.4750079  59.36776097]
+uncerts:
+[2.02823433e-02 9.29116842e-01 6.21031232e+01]
+uncerts:
+[5.96824693e-04 3.10687513e-02 6.24271717e+01]
+gim_uncerts:
+[array([ 0.20774158,  9.4750079 , 59.36776097]), array([2.02823433e-02, 9.29116842e-01, 6.21031232e+01]), array([5.96824693e-04, 3.10687513e-02, 6.24271717e+01])]
+Processing: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/dadi_inference_results/allo_2epoch/params7/Folded_nested/optimization_allo_2epoch_T0.3_nu0.75_H0.2_master42_rep22.txt
+gim_param_names:
+['T_WGD', 'nu']
+gim_best_params:
+[0.001, 0.058433977237515]
+['T_WGD', 'nu']
+uncerts:
+[ 0.32741367 17.86719778 80.61163503]
+uncerts:
+[3.20189057e-02 1.74029147e+00 5.27502365e+01]
+uncerts:
+[2.79005709e-03 1.43786207e-01 5.58289967e+01]
+gim_uncerts:
+[array([ 0.32741367, 17.86719778, 80.61163503]), array([3.20189057e-02, 1.74029147e+00, 5.27502365e+01]), array([2.79005709e-03, 1.43786207e-01, 5.58289967e+01])]
+Processing: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/dadi_inference_results/allo_2epoch/params7/Folded_nested/optimization_allo_2epoch_T0.3_nu0.75_H0.2_master42_rep23.txt
+gim_param_names:
+['T_WGD', 'nu']
+gim_best_params:
+[0.001, 0.0790467390751396]
+['T_WGD', 'nu']
+uncerts:
+[2.74901824e-01 2.00988979e+01 4.45899969e+02]
+uncerts:
+[1.79717162e-02 1.29783169e+00 6.67986410e+01]
+uncerts:
+[1.01842155e-03 8.47419005e-02 6.82341023e+01]
+gim_uncerts:
+[array([2.74901824e-01, 2.00988979e+01, 4.45899969e+02]), array([1.79717162e-02, 1.29783169e+00, 6.67986410e+01]), array([1.01842155e-03, 8.47419005e-02, 6.82341023e+01])]
+Processing: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/dadi_inference_results/allo_2epoch/params7/Folded_nested/optimization_allo_2epoch_T0.3_nu0.75_H0.2_master42_rep24.txt
+gim_param_names:
+['T_WGD', 'nu']
+gim_best_params:
+[0.001, 0.0336809710699675]
+['T_WGD', 'nu']
+uncerts:
+[8.71558789e-02 2.80558466e+00 1.01190648e+02]
+uncerts:
+[4.99179680e-01 1.60524314e+01 5.14626897e+02]
+uncerts:
+[1.77628797e-04 6.65386800e-03 4.80163696e+01]
+gim_uncerts:
+[array([8.71558789e-02, 2.80558466e+00, 1.01190648e+02]), array([4.99179680e-01, 1.60524314e+01, 5.14626897e+02]), array([1.77628797e-04, 6.65386800e-03, 4.80163696e+01])]
+Processing: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/dadi_inference_results/allo_2epoch/params7/Folded_nested/optimization_allo_2epoch_T0.3_nu0.75_H0.2_master42_rep3.txt
+gim_param_names:
+['T_WGD', 'nu']
+gim_best_params:
+[0.001, 0.039963565513369]
+['T_WGD', 'nu']
+uncerts:
+[ 0.21996744  8.38221778 91.3995062 ]
+uncerts:
+[3.55798809e-03 1.33029624e-01 6.79004067e+01]
+uncerts:
+[1.32769636e-03 5.08091042e-02 6.47755636e+01]
+gim_uncerts:
+[array([ 0.21996744,  8.38221778, 91.3995062 ]), array([3.55798809e-03, 1.33029624e-01, 6.79004067e+01]), array([1.32769636e-03, 5.08091042e-02, 6.47755636e+01])]
+Processing: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/dadi_inference_results/allo_2epoch/params7/Folded_nested/optimization_allo_2epoch_T0.3_nu0.75_H0.2_master42_rep4.txt
+gim_param_names:
+['T_WGD', 'nu']
+gim_best_params:
+[0.001, 0.0262678373919311]
+['T_WGD', 'nu']
+uncerts:
+[ 0.2017757   5.12334896 58.14251531]
+uncerts:
+[2.27262098e-02 5.77883096e-01 5.70982678e+01]
+uncerts:
+[2.24167428e-04 6.75204646e-03 5.55394402e+01]
+gim_uncerts:
+[array([ 0.2017757 ,  5.12334896, 58.14251531]), array([2.27262098e-02, 5.77883096e-01, 5.70982678e+01]), array([2.24167428e-04, 6.75204646e-03, 5.55394402e+01])]
+Processing: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/dadi_inference_results/allo_2epoch/params7/Folded_nested/optimization_allo_2epoch_T0.3_nu0.75_H0.2_master42_rep5.txt
+gim_param_names:
+['T_WGD', 'nu']
+gim_best_params:
+[0.001, 0.0298437808693155]
+['T_WGD', 'nu']
+uncerts:
+[2.40409665e-02 6.89016993e-01 4.91595908e+01]
+uncerts:
+[5.66004196e-02 1.60802736e+00 1.89972144e+02]
+uncerts:
+[1.44438781e-04 4.68184212e-03 5.55731417e+01]
+gim_uncerts:
+[array([2.40409665e-02, 6.89016993e-01, 4.91595908e+01]), array([5.66004196e-02, 1.60802736e+00, 1.89972144e+02]), array([1.44438781e-04, 4.68184212e-03, 5.55731417e+01])]
+Processing: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/dadi_inference_results/allo_2epoch/params7/Folded_nested/optimization_allo_2epoch_T0.3_nu0.75_H0.2_master42_rep6.txt
+gim_param_names:
+['T_WGD', 'nu']
+gim_best_params:
+[0.001, 0.0693097796155971]
+['T_WGD', 'nu']
+uncerts:
+[  0.34026688  21.82700522 246.90809495]
+uncerts:
+[5.47165183e-03 3.45576303e-01 7.00813617e+01]
+uncerts:
+[5.89706519e-04 1.80361768e-02 7.16357539e+01]
+gim_uncerts:
+[array([  0.34026688,  21.82700522, 246.90809495]), array([5.47165183e-03, 3.45576303e-01, 7.00813617e+01]), array([5.89706519e-04, 1.80361768e-02, 7.16357539e+01])]
+Processing: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/dadi_inference_results/allo_2epoch/params7/Folded_nested/optimization_allo_2epoch_T0.3_nu0.75_H0.2_master42_rep7.txt
+gim_param_names:
+['T_WGD', 'nu']
+gim_best_params:
+[0.001, 0.0342991837923156]
+['T_WGD', 'nu']
+uncerts:
+[ 0.32101101 10.54290241 85.54462855]
+uncerts:
+[5.15137309e-02 1.69363503e+00 5.94167181e+01]
+uncerts:
+[1.89432824e-04 7.25324050e-03 6.06954660e+01]
+gim_uncerts:
+[array([ 0.32101101, 10.54290241, 85.54462855]), array([5.15137309e-02, 1.69363503e+00, 5.94167181e+01]), array([1.89432824e-04, 7.25324050e-03, 6.06954660e+01])]
+Processing: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/dadi_inference_results/allo_2epoch/params7/Folded_nested/optimization_allo_2epoch_T0.3_nu0.75_H0.2_master42_rep8.txt
+gim_param_names:
+['T_WGD', 'nu']
+gim_best_params:
+[0.001, 0.0583063938603851]
+['T_WGD', 'nu']
+uncerts:
+[ 0.29884849 16.24081339 76.65793574]
+uncerts:
+[1.34083501e-02 7.25780923e-01 6.56190560e+01]
+uncerts:
+[8.24367195e-03 3.96326070e-01 1.33947028e+02]
+gim_uncerts:
+[array([ 0.29884849, 16.24081339, 76.65793574]), array([1.34083501e-02, 7.25780923e-01, 6.56190560e+01]), array([8.24367195e-03, 3.96326070e-01, 1.33947028e+02])]
+Processing: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/dadi_inference_results/allo_2epoch/params7/Folded_nested/optimization_allo_2epoch_T0.3_nu0.75_H0.2_master42_rep9.txt
+gim_param_names:
+['T_WGD', 'nu']
+gim_best_params:
+[0.001, 0.7178225727850828]
+['T_WGD', 'nu']
+uncerts:
+[2.06243111e-01 5.80748837e+01 4.81663064e+02]
+uncerts:
+[1.34908513e-02 3.26376889e+00 3.68568206e+01]
+uncerts:
+[7.13160762e-02 3.02734390e-01 2.20518502e+02]
+gim_uncerts:
+[array([2.06243111e-01, 5.80748837e+01, 4.81663064e+02]), array([1.34908513e-02, 3.26376889e+00, 3.68568206e+01]), array([7.13160762e-02, 3.02734390e-01, 2.20518502e+02])]
+Summary saved to: results_folded/nested_summary.csv
+Running full uncertainties:
+Processing: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/dadi_inference_results/allo_2epoch/params7/Folded_complex/optimization_allo_2epoch_T0.3_nu0.75_H0.2_master42_rep0.txt
+gim_param_names:
+['T_WGD', 'nu', 'H']
+gim_best_params:
+[0.2733132812805472, 0.7117546985101391, 0.098464999164945]
+['T_WGD', 'nu', 'H']
+uncerts:
+[6.31757410e-02 5.00599361e-02 1.96329094e-02 1.09860501e+02]
+uncerts:
+[6.33302616e-03 1.84412815e-02 1.74147440e-02 6.21971834e+01]
+uncerts:
+[9.88839907e-04 5.37400608e-03 1.65573013e-02 4.97010847e+01]
+gim_uncerts:
+[array([6.31757410e-02, 5.00599361e-02, 1.96329094e-02, 1.09860501e+02]), array([6.33302616e-03, 1.84412815e-02, 1.74147440e-02, 6.21971834e+01]), array([9.88839907e-04, 5.37400608e-03, 1.65573013e-02, 4.97010847e+01])]
+Processing: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/dadi_inference_results/allo_2epoch/params7/Folded_complex/optimization_allo_2epoch_T0.3_nu0.75_H0.2_master42_rep1.txt
+gim_param_names:
+['T_WGD', 'nu', 'H']
+gim_best_params:
+[0.21478724257609, 0.7355963114713837, 0.2088941014899614]
+['T_WGD', 'nu', 'H']
+uncerts:
+[5.81491438e-02 3.71025861e-02 3.22135435e-02 9.01684999e+01]
+uncerts:
+[6.98488590e-03 2.02245336e-02 2.98642133e-02 6.39628963e+01]
+uncerts:
+[1.55718712e-03 1.13351079e-02 3.01693207e-02 5.40219913e+01]
+gim_uncerts:
+[array([5.81491438e-02, 3.71025861e-02, 3.22135435e-02, 9.01684999e+01]), array([6.98488590e-03, 2.02245336e-02, 2.98642133e-02, 6.39628963e+01]), array([1.55718712e-03, 1.13351079e-02, 3.01693207e-02, 5.40219913e+01])]
+Processing: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/dadi_inference_results/allo_2epoch/params7/Folded_complex/optimization_allo_2epoch_T0.3_nu0.75_H0.2_master42_rep10.txt
+gim_param_names:
+['T_WGD', 'nu', 'H']
+gim_best_params:
+[0.3427240049783754, 0.7323157840413195, 0.1660977383050786]
+['T_WGD', 'nu', 'H']
+uncerts:
+[4.71396645e-02 3.41206114e-02 2.29469885e-02 9.34734160e+01]
+uncerts:
+[2.19483014e-03 1.06744746e-02 2.22567149e-02 5.37319116e+01]
+uncerts:
+[3.33954606e-04 1.82193827e-03 2.25962720e-02 4.95195366e+01]
+gim_uncerts:
+[array([4.71396645e-02, 3.41206114e-02, 2.29469885e-02, 9.34734160e+01]), array([2.19483014e-03, 1.06744746e-02, 2.22567149e-02, 5.37319116e+01]), array([3.33954606e-04, 1.82193827e-03, 2.25962720e-02, 4.95195366e+01])]
+Processing: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/dadi_inference_results/allo_2epoch/params7/Folded_complex/optimization_allo_2epoch_T0.3_nu0.75_H0.2_master42_rep11.txt
+gim_param_names:
+['T_WGD', 'nu', 'H']
+gim_best_params:
+[0.2415488517217514, 0.7127027769752979, 0.1527825870476892]
+['T_WGD', 'nu', 'H']
+uncerts:
+[7.47860398e-02 5.53604501e-02 3.77086509e-02 9.19904339e+01]
+uncerts:
+[2.34575994e-01 1.44174769e-01 6.56677919e-02 2.21510120e+02]
+uncerts:
+[2.24782440e-01 1.38009553e-01 6.34970168e-02 2.12061289e+02]
+gim_uncerts:
+[array([7.47860398e-02, 5.53604501e-02, 3.77086509e-02, 9.19904339e+01]), array([2.34575994e-01, 1.44174769e-01, 6.56677919e-02, 2.21510120e+02]), array([2.24782440e-01, 1.38009553e-01, 6.34970168e-02, 2.12061289e+02])]
+Processing: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/dadi_inference_results/allo_2epoch/params7/Folded_complex/optimization_allo_2epoch_T0.3_nu0.75_H0.2_master42_rep12.txt
+gim_param_names:
+['T_WGD', 'nu', 'H']
+gim_best_params:
+[0.294541103072387, 0.7437905442551698, 0.1635518656872854]
+['T_WGD', 'nu', 'H']
+uncerts:
+[6.76645665e-02 4.04194443e-02 1.97531517e-02 8.25764834e+01]
+uncerts:
+[1.15643337e-03 6.09262019e-03 2.09608506e-02 3.89690396e+01]
+uncerts:
+[1.51784368e-04 8.78005322e-04 2.10371841e-02 4.06847319e+01]
+gim_uncerts:
+[array([6.76645665e-02, 4.04194443e-02, 1.97531517e-02, 8.25764834e+01]), array([1.15643337e-03, 6.09262019e-03, 2.09608506e-02, 3.89690396e+01]), array([1.51784368e-04, 8.78005322e-04, 2.10371841e-02, 4.06847319e+01])]
+Processing: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/dadi_inference_results/allo_2epoch/params7/Folded_complex/optimization_allo_2epoch_T0.3_nu0.75_H0.2_master42_rep13.txt
+gim_param_names:
+['T_WGD', 'nu', 'H']
+gim_best_params:
+[0.3799210010724185, 0.8187943940896667, 0.1289411924348929]
+['T_WGD', 'nu', 'H']
+uncerts:
+[6.62883059e-02 3.57307092e-02 1.91492258e-02 9.51259689e+01]
+uncerts:
+[4.10952034e-03 1.19250337e-02 1.92021473e-02 3.71411533e+01]
+uncerts:
+[6.14960680e-04 2.93600917e-03 1.92096582e-02 3.29749614e+01]
+gim_uncerts:
+[array([6.62883059e-02, 3.57307092e-02, 1.91492258e-02, 9.51259689e+01]), array([4.10952034e-03, 1.19250337e-02, 1.92021473e-02, 3.71411533e+01]), array([6.14960680e-04, 2.93600917e-03, 1.92096582e-02, 3.29749614e+01])]
+Processing: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/dadi_inference_results/allo_2epoch/params7/Folded_complex/optimization_allo_2epoch_T0.3_nu0.75_H0.2_master42_rep14.txt
+gim_param_names:
+['T_WGD', 'nu', 'H']
+gim_best_params:
+[0.2661253880656458, 0.710970645043544, 0.2085911827713601]
+['T_WGD', 'nu', 'H']
+uncerts:
+[6.69824742e-02 4.23828905e-02 5.05410615e-02 8.00346411e+01]
+uncerts:
+[1.67065026e-02 3.20115675e-02 4.23166606e-02 6.92913029e+01]
+uncerts:
+[1.67377486e-02 3.20419444e-02 4.23437593e-02 6.93294165e+01]
+gim_uncerts:
+[array([6.69824742e-02, 4.23828905e-02, 5.05410615e-02, 8.00346411e+01]), array([1.67065026e-02, 3.20115675e-02, 4.23166606e-02, 6.92913029e+01]), array([1.67377486e-02, 3.20419444e-02, 4.23437593e-02, 6.93294165e+01])]
+Processing: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/dadi_inference_results/allo_2epoch/params7/Folded_complex/optimization_allo_2epoch_T0.3_nu0.75_H0.2_master42_rep15.txt
+gim_param_names:
+['T_WGD', 'nu', 'H']
+gim_best_params:
+[0.2084672863249262, 0.7340352752049205, 0.1696546207931512]
+['T_WGD', 'nu', 'H']
+uncerts:
+[2.20057162e-02 2.73606025e-02 2.16839344e-02 7.44562550e+01]
+uncerts:
+[1.87817494e-03 1.08252164e-02 2.05333961e-02 5.47727713e+01]
+uncerts:
+[3.06690288e-04 2.19234677e-03 2.04692925e-02 4.72667682e+01]
+gim_uncerts:
+[array([2.20057162e-02, 2.73606025e-02, 2.16839344e-02, 7.44562550e+01]), array([1.87817494e-03, 1.08252164e-02, 2.05333961e-02, 5.47727713e+01]), array([3.06690288e-04, 2.19234677e-03, 2.04692925e-02, 4.72667682e+01])]
+Processing: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/dadi_inference_results/allo_2epoch/params7/Folded_complex/optimization_allo_2epoch_T0.3_nu0.75_H0.2_master42_rep16.txt
+gim_param_names:
+['T_WGD', 'nu', 'H']
+gim_best_params:
+[0.2086496196509911, 0.6687482824174174, 0.2003804241794606]
+['T_WGD', 'nu', 'H']
+uncerts:
+[2.98442138e-02 2.66457377e-02 3.04479953e-02 7.14156970e+01]
+uncerts:
+[2.03473400e-03 1.27068850e-02 2.94059924e-02 6.17609344e+01]
+uncerts:
+[2.71571117e-04 2.53495364e-03 2.97340750e-02 5.63917208e+01]
+gim_uncerts:
+[array([2.98442138e-02, 2.66457377e-02, 3.04479953e-02, 7.14156970e+01]), array([2.03473400e-03, 1.27068850e-02, 2.94059924e-02, 6.17609344e+01]), array([2.71571117e-04, 2.53495364e-03, 2.97340750e-02, 5.63917208e+01])]
+Processing: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/dadi_inference_results/allo_2epoch/params7/Folded_complex/optimization_allo_2epoch_T0.3_nu0.75_H0.2_master42_rep17.txt
+gim_param_names:
+['T_WGD', 'nu', 'H']
+gim_best_params:
+[0.3271883414230186, 0.7238697243279217, 0.1919569100725258]
+['T_WGD', 'nu', 'H']
+uncerts:
+[7.59537202e-02 4.04605852e-02 2.43029439e-02 1.00920483e+02]
+uncerts:
+[3.58550503e-03 1.06172779e-02 2.42995331e-02 5.70550503e+01]
+uncerts:
+[4.42325378e-04 2.15589171e-03 2.35915033e-02 5.65281978e+01]
+gim_uncerts:
+[array([7.59537202e-02, 4.04605852e-02, 2.43029439e-02, 1.00920483e+02]), array([3.58550503e-03, 1.06172779e-02, 2.42995331e-02, 5.70550503e+01]), array([4.42325378e-04, 2.15589171e-03, 2.35915033e-02, 5.65281978e+01])]
+Processing: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/dadi_inference_results/allo_2epoch/params7/Folded_complex/optimization_allo_2epoch_T0.3_nu0.75_H0.2_master42_rep18.txt
+gim_param_names:
+['T_WGD', 'nu', 'H']
+gim_best_params:
+[0.0147819554208354, 0.4020366103799588, 2.52179343097205]
+['T_WGD', 'nu', 'H']
+uncerts:
+[1.94466037e-03 4.68659412e-02 3.51942857e-01 5.56906502e+01]
+uncerts:
+[8.41376067e-03 1.12142677e-01 1.40162604e+00 5.30380953e+01]
+uncerts:
+[8.47601115e-03 1.12985265e-01 1.41137909e+00 5.30422095e+01]
+gim_uncerts:
+[array([1.94466037e-03, 4.68659412e-02, 3.51942857e-01, 5.56906502e+01]), array([8.41376067e-03, 1.12142677e-01, 1.40162604e+00, 5.30380953e+01]), array([8.47601115e-03, 1.12985265e-01, 1.41137909e+00, 5.30422095e+01])]
+Processing: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/dadi_inference_results/allo_2epoch/params7/Folded_complex/optimization_allo_2epoch_T0.3_nu0.75_H0.2_master42_rep19.txt
+gim_param_names:
+['T_WGD', 'nu', 'H']
+gim_best_params:
+[0.2832432088503786, 0.7745246038157255, 0.1768643882563934]
+['T_WGD', 'nu', 'H']
+uncerts:
+[6.53210810e-02 4.46692237e-02 2.28602117e-02 1.06132338e+02]
+uncerts:
+[2.95398991e-02 3.49867979e-02 1.90156495e-02 8.35451154e+01]
+uncerts:
+[2.93767653e-02 3.48888705e-02 1.89914464e-02 8.33568505e+01]
+gim_uncerts:
+[array([6.53210810e-02, 4.46692237e-02, 2.28602117e-02, 1.06132338e+02]), array([2.95398991e-02, 3.49867979e-02, 1.90156495e-02, 8.35451154e+01]), array([2.93767653e-02, 3.48888705e-02, 1.89914464e-02, 8.33568505e+01])]
+Processing: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/dadi_inference_results/allo_2epoch/params7/Folded_complex/optimization_allo_2epoch_T0.3_nu0.75_H0.2_master42_rep2.txt
+gim_param_names:
+['T_WGD', 'nu', 'H']
+gim_best_params:
+[0.1483302508436028, 0.6808037176751635, 0.3327771601183319]
+['T_WGD', 'nu', 'H']
+uncerts:
+[9.52767879e-03 1.96270521e-02 3.86814226e-02 5.47454062e+01]
+uncerts:
+[1.34128143e-02 3.11047148e-02 4.12052501e-02 6.57313057e+01]
+uncerts:
+[1.34347892e-02 3.11323622e-02 4.12417745e-02 6.57587122e+01]
+gim_uncerts:
+[array([9.52767879e-03, 1.96270521e-02, 3.86814226e-02, 5.47454062e+01]), array([1.34128143e-02, 3.11047148e-02, 4.12052501e-02, 6.57313057e+01]), array([1.34347892e-02, 3.11323622e-02, 4.12417745e-02, 6.57587122e+01])]
+Processing: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/dadi_inference_results/allo_2epoch/params7/Folded_complex/optimization_allo_2epoch_T0.3_nu0.75_H0.2_master42_rep20.txt
+gim_param_names:
+['T_WGD', 'nu', 'H']
+gim_best_params:
+[0.3885964383009049, 0.8151797861723468, 0.1384496798526295]
+['T_WGD', 'nu', 'H']
+uncerts:
+[9.47199426e-02 4.23241487e-02 2.09290201e-02 1.18635231e+02]
+uncerts:
+[9.91000887e-02 4.63317712e-02 2.10703888e-02 1.27235648e+02]
+uncerts:
+[8.87826273e-02 4.03485748e-02 2.07988841e-02 1.12899977e+02]
+gim_uncerts:
+[array([9.47199426e-02, 4.23241487e-02, 2.09290201e-02, 1.18635231e+02]), array([9.91000887e-02, 4.63317712e-02, 2.10703888e-02, 1.27235648e+02]), array([8.87826273e-02, 4.03485748e-02, 2.07988841e-02, 1.12899977e+02])]
+Processing: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/dadi_inference_results/allo_2epoch/params7/Folded_complex/optimization_allo_2epoch_T0.3_nu0.75_H0.2_master42_rep21.txt
+gim_param_names:
+['T_WGD', 'nu', 'H']
+gim_best_params:
+[0.2790783376796433, 0.7422255928793386, 0.1753550943064038]
+['T_WGD', 'nu', 'H']
+uncerts:
+[5.78431397e-02 3.46301152e-02 2.39817381e-02 7.59842371e+01]
+uncerts:
+[1.77127852e-03 1.07349787e-02 2.85200427e-02 4.35674363e+01]
+uncerts:
+[2.58178921e-04 1.90754689e-03 2.82876458e-02 4.22921698e+01]
+gim_uncerts:
+[array([5.78431397e-02, 3.46301152e-02, 2.39817381e-02, 7.59842371e+01]), array([1.77127852e-03, 1.07349787e-02, 2.85200427e-02, 4.35674363e+01]), array([2.58178921e-04, 1.90754689e-03, 2.82876458e-02, 4.22921698e+01])]
+Processing: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/dadi_inference_results/allo_2epoch/params7/Folded_complex/optimization_allo_2epoch_T0.3_nu0.75_H0.2_master42_rep22.txt
+gim_param_names:
+['T_WGD', 'nu', 'H']
+gim_best_params:
+[0.4142713148562473, 0.8489145837583284, 0.1391349717272741]
+['T_WGD', 'nu', 'H']
+uncerts:
+[7.39844823e-02 3.00802773e-02 1.79573668e-02 9.18976178e+01]
+uncerts:
+[3.50354300e-03 1.60771955e-02 1.65389688e-02 4.38420367e+01]
+uncerts:
+[5.29729643e-04 3.74868243e-03 1.63468259e-02 4.44569224e+01]
+gim_uncerts:
+[array([7.39844823e-02, 3.00802773e-02, 1.79573668e-02, 9.18976178e+01]), array([3.50354300e-03, 1.60771955e-02, 1.65389688e-02, 4.38420367e+01]), array([5.29729643e-04, 3.74868243e-03, 1.63468259e-02, 4.44569224e+01])]
+Processing: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/dadi_inference_results/allo_2epoch/params7/Folded_complex/optimization_allo_2epoch_T0.3_nu0.75_H0.2_master42_rep23.txt
+gim_param_names:
+['T_WGD', 'nu', 'H']
+gim_best_params:
+[0.2078196886272771, 0.6636926043552053, 0.3558496416597886]
+['T_WGD', 'nu', 'H']
+uncerts:
+[4.34221731e-02 4.18585723e-02 6.71199520e-02 7.61259878e+01]
+uncerts:
+[2.90817092e-02 3.69958268e-02 6.00464350e-02 7.42575618e+01]
+uncerts:
+[2.89618417e-02 3.68747083e-02 5.99207443e-02 7.41552164e+01]
+gim_uncerts:
+[array([4.34221731e-02, 4.18585723e-02, 6.71199520e-02, 7.61259878e+01]), array([2.90817092e-02, 3.69958268e-02, 6.00464350e-02, 7.42575618e+01]), array([2.89618417e-02, 3.68747083e-02, 5.99207443e-02, 7.41552164e+01])]
+Processing: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/dadi_inference_results/allo_2epoch/params7/Folded_complex/optimization_allo_2epoch_T0.3_nu0.75_H0.2_master42_rep24.txt
+gim_param_names:
+['T_WGD', 'nu', 'H']
+gim_best_params:
+[0.2414436915279148, 0.7063685895666008, 0.142308038358714]
+['T_WGD', 'nu', 'H']
+uncerts:
+[6.58309570e-02 5.22484587e-02 2.12303420e-02 9.06575758e+01]
+uncerts:
+[1.39645575e-01 9.08301532e-02 2.49237615e-02 1.50039887e+02]
+uncerts:
+[1.42700494e-01 9.28630281e-02 2.52887934e-02 1.53317644e+02]
+gim_uncerts:
+[array([6.58309570e-02, 5.22484587e-02, 2.12303420e-02, 9.06575758e+01]), array([1.39645575e-01, 9.08301532e-02, 2.49237615e-02, 1.50039887e+02]), array([1.42700494e-01, 9.28630281e-02, 2.52887934e-02, 1.53317644e+02])]
+Processing: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/dadi_inference_results/allo_2epoch/params7/Folded_complex/optimization_allo_2epoch_T0.3_nu0.75_H0.2_master42_rep3.txt
+gim_param_names:
+['T_WGD', 'nu', 'H']
+gim_best_params:
+[0.1920279363553463, 0.6667656645564152, 0.2196733762570382]
+['T_WGD', 'nu', 'H']
+uncerts:
+[2.71047733e-02 3.52334197e-02 3.03802014e-02 7.83423369e+01]
+uncerts:
+[2.55302132e-03 1.21030490e-02 3.16181780e-02 5.39722567e+01]
+uncerts:
+[3.95562362e-04 2.58379509e-03 3.20439485e-02 4.58480771e+01]
+gim_uncerts:
+[array([2.71047733e-02, 3.52334197e-02, 3.03802014e-02, 7.83423369e+01]), array([2.55302132e-03, 1.21030490e-02, 3.16181780e-02, 5.39722567e+01]), array([3.95562362e-04, 2.58379509e-03, 3.20439485e-02, 4.58480771e+01])]
+Processing: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/dadi_inference_results/allo_2epoch/params7/Folded_complex/optimization_allo_2epoch_T0.3_nu0.75_H0.2_master42_rep4.txt
+gim_param_names:
+['T_WGD', 'nu', 'H']
+gim_best_params:
+[0.238395542937672, 0.6819637587754335, 0.1389027125714415]
+['T_WGD', 'nu', 'H']
+uncerts:
+[5.28244880e-02 4.11680883e-02 1.93605656e-02 8.51177584e+01]
+uncerts:
+[2.75534892e-02 2.95684581e-02 1.93302216e-02 6.89597804e+01]
+uncerts:
+[2.76773573e-02 2.96261517e-02 1.94168699e-02 6.90143179e+01]
+gim_uncerts:
+[array([5.28244880e-02, 4.11680883e-02, 1.93605656e-02, 8.51177584e+01]), array([2.75534892e-02, 2.95684581e-02, 1.93302216e-02, 6.89597804e+01]), array([2.76773573e-02, 2.96261517e-02, 1.94168699e-02, 6.90143179e+01])]
+Processing: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/dadi_inference_results/allo_2epoch/params7/Folded_complex/optimization_allo_2epoch_T0.3_nu0.75_H0.2_master42_rep5.txt
+gim_param_names:
+['T_WGD', 'nu', 'H']
+gim_best_params:
+[0.445095795576183, 0.7674098106639202, 0.1215989723693938]
+['T_WGD', 'nu', 'H']
+uncerts:
+[7.92502936e-02 3.68984586e-02 1.86972013e-02 9.15341532e+01]
+uncerts:
+[7.88766881e-03 1.67325335e-02 1.83105731e-02 4.39346325e+01]
+uncerts:
+[1.12082074e-03 5.17502440e-03 1.79950520e-02 3.01718475e+01]
+gim_uncerts:
+[array([7.92502936e-02, 3.68984586e-02, 1.86972013e-02, 9.15341532e+01]), array([7.88766881e-03, 1.67325335e-02, 1.83105731e-02, 4.39346325e+01]), array([1.12082074e-03, 5.17502440e-03, 1.79950520e-02, 3.01718475e+01])]
+Processing: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/dadi_inference_results/allo_2epoch/params7/Folded_complex/optimization_allo_2epoch_T0.3_nu0.75_H0.2_master42_rep6.txt
+gim_param_names:
+['T_WGD', 'nu', 'H']
+gim_best_params:
+[0.2109602238022213, 0.7262766583273372, 0.2342700226764585]
+['T_WGD', 'nu', 'H']
+uncerts:
+[4.22497375e-02 3.31260076e-02 4.07861469e-02 6.98198434e+01]
+uncerts:
+[1.77909044e-02 3.07968850e-02 3.39459002e-02 7.03169679e+01]
+uncerts:
+[1.78107098e-02 3.08043605e-02 3.39678210e-02 7.03202710e+01]
+gim_uncerts:
+[array([4.22497375e-02, 3.31260076e-02, 4.07861469e-02, 6.98198434e+01]), array([1.77909044e-02, 3.07968850e-02, 3.39459002e-02, 7.03169679e+01]), array([1.78107098e-02, 3.08043605e-02, 3.39678210e-02, 7.03202710e+01])]
+Processing: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/dadi_inference_results/allo_2epoch/params7/Folded_complex/optimization_allo_2epoch_T0.3_nu0.75_H0.2_master42_rep7.txt
+gim_param_names:
+['T_WGD', 'nu', 'H']
+gim_best_params:
+[0.1888790354566858, 0.6891983441055362, 0.1514345951536888]
+['T_WGD', 'nu', 'H']
+uncerts:
+[4.93565395e-02 4.90388604e-02 2.82090672e-02 7.92014862e+01]
+uncerts:
+[3.87501801e-02 4.42651271e-02 2.76974030e-02 7.62252146e+01]
+uncerts:
+[3.96300913e-02 4.50676287e-02 2.78060393e-02 7.70658671e+01]
+gim_uncerts:
+[array([4.93565395e-02, 4.90388604e-02, 2.82090672e-02, 7.92014862e+01]), array([3.87501801e-02, 4.42651271e-02, 2.76974030e-02, 7.62252146e+01]), array([3.96300913e-02, 4.50676287e-02, 2.78060393e-02, 7.70658671e+01])]
+Processing: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/dadi_inference_results/allo_2epoch/params7/Folded_complex/optimization_allo_2epoch_T0.3_nu0.75_H0.2_master42_rep8.txt
+gim_param_names:
+['T_WGD', 'nu', 'H']
+gim_best_params:
+[0.3569746475129081, 0.7968164726142738, 0.1705156870231768]
+['T_WGD', 'nu', 'H']
+uncerts:
+[6.56599146e-02 3.99316566e-02 2.76418583e-02 1.16139276e+02]
+uncerts:
+[3.06082519e-03 1.59854213e-02 2.44554564e-02 6.11514435e+01]
+uncerts:
+[5.47760126e-04 3.33090487e-03 2.44323193e-02 5.36530405e+01]
+gim_uncerts:
+[array([6.56599146e-02, 3.99316566e-02, 2.76418583e-02, 1.16139276e+02]), array([3.06082519e-03, 1.59854213e-02, 2.44554564e-02, 6.11514435e+01]), array([5.47760126e-04, 3.33090487e-03, 2.44323193e-02, 5.36530405e+01])]
+Processing: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/dadi_inference_results/allo_2epoch/params7/Folded_complex/optimization_allo_2epoch_T0.3_nu0.75_H0.2_master42_rep9.txt
+gim_param_names:
+['T_WGD', 'nu', 'H']
+gim_best_params:
+[0.0233529385036149, 0.449592440495685, 1.7700127864270534]
+['T_WGD', 'nu', 'H']
+uncerts:
+[3.43708346e-03 4.30285202e-02 2.60638471e-01 6.27727725e+01]
+uncerts:
+[1.43209844e-02 1.01571454e-01 9.94293937e-01 6.09633607e+01]
+uncerts:
+[1.44582220e-02 1.02767587e-01 1.00362796e+00 6.09187652e+01]
+gim_uncerts:
+[array([3.43708346e-03, 4.30285202e-02, 2.60638471e-01, 6.27727725e+01]), array([1.43209844e-02, 1.01571454e-01, 9.94293937e-01, 6.09633607e+01]), array([1.44582220e-02, 1.02767587e-01, 1.00362796e+00, 6.09187652e+01])]
+Summary saved to: results_folded/full_summary.csv
+Running LRT:
+Computing LRT for: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/msprime_tree_sequences/allo_2epoch/params7/allo_2epoch_T0.3_nu0.75_H0.2_master42_rep0.trees
+Computing LRT for: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/msprime_tree_sequences/allo_2epoch/params7/allo_2epoch_T0.3_nu0.75_H0.2_master42_rep1.trees
+Computing LRT for: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/msprime_tree_sequences/allo_2epoch/params7/allo_2epoch_T0.3_nu0.75_H0.2_master42_rep10.trees
+Computing LRT for: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/msprime_tree_sequences/allo_2epoch/params7/allo_2epoch_T0.3_nu0.75_H0.2_master42_rep11.trees
+Computing LRT for: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/msprime_tree_sequences/allo_2epoch/params7/allo_2epoch_T0.3_nu0.75_H0.2_master42_rep12.trees
+Computing LRT for: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/msprime_tree_sequences/allo_2epoch/params7/allo_2epoch_T0.3_nu0.75_H0.2_master42_rep13.trees
+Computing LRT for: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/msprime_tree_sequences/allo_2epoch/params7/allo_2epoch_T0.3_nu0.75_H0.2_master42_rep14.trees
+Computing LRT for: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/msprime_tree_sequences/allo_2epoch/params7/allo_2epoch_T0.3_nu0.75_H0.2_master42_rep15.trees
+Computing LRT for: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/msprime_tree_sequences/allo_2epoch/params7/allo_2epoch_T0.3_nu0.75_H0.2_master42_rep16.trees
+Computing LRT for: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/msprime_tree_sequences/allo_2epoch/params7/allo_2epoch_T0.3_nu0.75_H0.2_master42_rep17.trees
+Computing LRT for: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/msprime_tree_sequences/allo_2epoch/params7/allo_2epoch_T0.3_nu0.75_H0.2_master42_rep18.trees
+Computing LRT for: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/msprime_tree_sequences/allo_2epoch/params7/allo_2epoch_T0.3_nu0.75_H0.2_master42_rep19.trees
+Computing LRT for: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/msprime_tree_sequences/allo_2epoch/params7/allo_2epoch_T0.3_nu0.75_H0.2_master42_rep2.trees
+Computing LRT for: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/msprime_tree_sequences/allo_2epoch/params7/allo_2epoch_T0.3_nu0.75_H0.2_master42_rep20.trees
+Computing LRT for: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/msprime_tree_sequences/allo_2epoch/params7/allo_2epoch_T0.3_nu0.75_H0.2_master42_rep21.trees
+Computing LRT for: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/msprime_tree_sequences/allo_2epoch/params7/allo_2epoch_T0.3_nu0.75_H0.2_master42_rep22.trees
+Computing LRT for: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/msprime_tree_sequences/allo_2epoch/params7/allo_2epoch_T0.3_nu0.75_H0.2_master42_rep23.trees
+Computing LRT for: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/msprime_tree_sequences/allo_2epoch/params7/allo_2epoch_T0.3_nu0.75_H0.2_master42_rep24.trees
+Computing LRT for: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/msprime_tree_sequences/allo_2epoch/params7/allo_2epoch_T0.3_nu0.75_H0.2_master42_rep3.trees
+Computing LRT for: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/msprime_tree_sequences/allo_2epoch/params7/allo_2epoch_T0.3_nu0.75_H0.2_master42_rep4.trees
+Computing LRT for: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/msprime_tree_sequences/allo_2epoch/params7/allo_2epoch_T0.3_nu0.75_H0.2_master42_rep5.trees
+Computing LRT for: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/msprime_tree_sequences/allo_2epoch/params7/allo_2epoch_T0.3_nu0.75_H0.2_master42_rep6.trees
+Computing LRT for: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/msprime_tree_sequences/allo_2epoch/params7/allo_2epoch_T0.3_nu0.75_H0.2_master42_rep7.trees
+Computing LRT for: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/msprime_tree_sequences/allo_2epoch/params7/allo_2epoch_T0.3_nu0.75_H0.2_master42_rep8.trees
+Computing LRT for: /xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/msprime_tree_sequences/allo_2epoch/params7/allo_2epoch_T0.3_nu0.75_H0.2_master42_rep9.trees
+LRT results saved to: results_folded/LRT.csv
+==========================================
+Job completed at: Thu Apr  2 19:28:09 MST 2026
+==========================================

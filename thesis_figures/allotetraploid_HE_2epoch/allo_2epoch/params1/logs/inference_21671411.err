@@ -1,0 +1,21 @@
+RuntimeError: module was compiled against NumPy C-API version 0x12 (NumPy 1.23) but the running NumPy has C-API version 0x11. Check the section C-API incompatibility at the Troubleshooting ImportError section at https://numpy.org/devdocs/user/troubleshooting-importerror.html#c-api-incompatibility for indications on how to solve this problem.
+Traceback (most recent call last):
+  File "/xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/scripts/summarize_inference_results.py", line 4, in <module>
+    import tskit
+  File "/xdisk/rgutenk/sgibbon/dadi_dev_venv/lib/python3.11/site-packages/tskit/__init__.py", line 22, in <module>
+    import _tskit
+ImportError: numpy._core.multiarray failed to import
+RuntimeError: module was compiled against NumPy C-API version 0x12 (NumPy 1.23) but the running NumPy has C-API version 0x11. Check the section C-API incompatibility at the Troubleshooting ImportError section at https://numpy.org/devdocs/user/troubleshooting-importerror.html#c-api-incompatibility for indications on how to solve this problem.
+Traceback (most recent call last):
+  File "/xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/scripts/summarize_inference_results.py", line 4, in <module>
+    import tskit
+  File "/xdisk/rgutenk/sgibbon/dadi_dev_venv/lib/python3.11/site-packages/tskit/__init__.py", line 22, in <module>
+    import _tskit
+ImportError: numpy._core.multiarray failed to import
+RuntimeError: module was compiled against NumPy C-API version 0x12 (NumPy 1.23) but the running NumPy has C-API version 0x11. Check the section C-API incompatibility at the Troubleshooting ImportError section at https://numpy.org/devdocs/user/troubleshooting-importerror.html#c-api-incompatibility for indications on how to solve this problem.
+Traceback (most recent call last):
+  File "/xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/scripts/summarize_inference_results.py", line 4, in <module>
+    import tskit
+  File "/xdisk/rgutenk/sgibbon/dadi_dev_venv/lib/python3.11/site-packages/tskit/__init__.py", line 22, in <module>
+    import _tskit
+ImportError: numpy._core.multiarray failed to import

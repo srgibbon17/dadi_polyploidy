@@ -1,0 +1,26 @@
+description: recurrent model
+time_units: generations
+generation_time: 1
+demes:
+- name: Dip
+  epochs:
+  - {end_time: 12000.000000000002, start_size: 10000.0}
+  - {end_time: 8000.000000000002, start_size: 10000}
+  - {end_time: 0, start_size: 10000}
+- name: Tet1
+  start_time: 12000.000000000002
+  ancestors: [Dip]
+  epochs:
+  - {end_time: 8000.000000000002, start_size: 6000.0}
+  - {end_time: 0, start_size: 6000.0}
+- name: Tet2
+  start_time: 8000.000000000002
+  ancestors: [Dip]
+  epochs:
+  - {end_time: 0, start_size: 3750.0}
+migrations:
+- demes: [Tet2, Tet1]
+  rate: 3.75e-05
+- {source: Dip, dest: Tet1, end_time: 8000.000000000002, rate: 1.75e-05}
+- {source: Dip, dest: Tet1, start_time: 8000.000000000002, rate: 1.75e-05}
+- {source: Dip, dest: Tet2, rate: 1.75e-05}

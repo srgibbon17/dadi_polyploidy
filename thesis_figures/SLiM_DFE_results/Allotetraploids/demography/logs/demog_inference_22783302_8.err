@@ -1,0 +1,10 @@
+WARNING:Inference:Model is < 0 where data is not masked.
+WARNING:Inference:Number of affected entries is 312. Sum of data in those entries is 4:
+WARNING:Inference:Model is < 0 where data is not masked.
+WARNING:Inference:Number of affected entries is 238. Sum of data in those entries is 1:
+WARNING:Inference:Model is < 0 where data is not masked.
+WARNING:Inference:Number of affected entries is 4. Sum of data in those entries is 3:
+WARNING:Inference:Model is < 0 where data is not masked.
+WARNING:Inference:Number of affected entries is 2. Sum of data in those entries is 2:
+WARNING:Inference:Model is < 0 where data is not masked.
+WARNING:Inference:Number of affected entries is 11. Sum of data in those entries is 7:

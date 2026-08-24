@@ -1,0 +1,13 @@
+/var/spool/slurm/d/job21678561/slurm_script: line 15: /xdisk/rgutenk/sgibbon/dadi_dev_venv333/bin/activate: No such file or directory
+Traceback (most recent call last):
+  File "/xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/scripts/summarize_inference_results.py", line 4, in <module>
+    import tskit
+ModuleNotFoundError: No module named 'tskit'
+Traceback (most recent call last):
+  File "/xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/scripts/summarize_inference_results.py", line 4, in <module>
+    import tskit
+ModuleNotFoundError: No module named 'tskit'
+Traceback (most recent call last):
+  File "/xdisk/rgutenk/sgibbon/dadi_msprime_pipeline/scripts/summarize_inference_results.py", line 4, in <module>
+    import tskit
+ModuleNotFoundError: No module named 'tskit'
