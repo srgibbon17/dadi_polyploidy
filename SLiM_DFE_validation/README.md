@@ -11,11 +11,11 @@ This folder contains python scripts for inferring demographic and DFE models fro
 Here, we outline the complete validation pipeline with bash commands beginning from SLiM simulations through DFE inference. 
 
 In general, the pipeline is as follows: 
-1. Run WF burnin SLiM simulations
-2. Run nonWF SLiM simulations with tetraploids
-3. Run dadi demographic inference
-4. Run dadi cache generation
-5. Run dadi DFE inference
+1. Run WF burnin SLiM simulations (*_burn.slim)
+2. Run nonWF SLiM simulations with tetraploids (*_final.slim)
+3. Run dadi demographic inference (dadi_demographic_inference.py)
+4. Run dadi cache generation (dadi_cache_generation.py)
+5. Run dadi DFE inference (dadi_DFE_inference.py)
 
 #### Run SLiM simulations 
 Below, we assume that the relevant SLiM scripts are in the current directory. If not, edit the paths in the commands below.
