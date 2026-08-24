@@ -8,7 +8,14 @@ This folder contains SLiM simulation scripts for generating tree sequences from 
 This folder contains python scripts for inferring demographic and DFE models from the tree sequences output by the SLiM simulations.
 
 ### Full simulation to inference pipeline with bash commands
-Here, we outline the complete validation pipeline with bash commands beginning from SLiM simulations through DFE inference. The example below is 
+Here, we outline the complete validation pipeline with bash commands beginning from SLiM simulations through DFE inference. 
+
+In general, the pipeline is as follows: 
+1. Run WF burnin SLiM simulations
+2. Run nonWF SLiM simulations with tetraploids
+3. Run dadi demographic inference
+4. Run dadi cache generation
+5. Run dadi DFE inference
 
 #### Run SLiM simulations 
 Below, we assume that the relevant SLiM scripts are in the current directory. If not, edit the paths in the commands below.
