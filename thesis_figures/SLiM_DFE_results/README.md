@@ -15,12 +15,7 @@ Code and data for validation of DFE inference with dadi and fastDFE based on SLi
 - `Joint_DFE`
   - Demographic inference and dadi DFE infernce for an autotetraploid and diploid progenitor joint DFE model
   - `demography_box_plots.pdf`: Box plots for demographic inference parameters
-  - `dfe_scatter_small.pdf` and `dfe_scatter_large.pdf`: Scatter plots of inferred DFE shape and scale parameters for small (~20) and large (~100) sample sizes, respectively
-  - `dfe_discretized_small.pdf` and `dfe_discretized_large.pdf`: Discretized gamma DFE fits compared to the true simulated discretized gamma DFE. For each sample size, the gamma DFE is discretized for each replicate and then the discrete bins are averaged over replicates to show a single discretized DFE.
-  - `dfe_w_boxplot.pdf`: Box plot of the joint DFE mixture model correlation parameter w
-- `Joint_DFE_migration`
-  - Demographic inference and dadi DFE infernce for an autotetraploid and diploid progenitor joint DFE model
-  - `demography_box_plots.pdf`: Box plots for demographic inference parameters
-  - `dfe_scatter_large.pdf`: Scatter plots of inferred DFE shape and scale parameters for large (~100) sample sizes, respectively
-  - `dfe_discretized_large.pdf`: Discretized gamma DFE fits compared to the true simulated discretized gamma DFE. For each sample size, the gamma DFE is discretized for each replicate and then the discrete bins are averaged over replicates to show a single discretized DFE.
+  - `dfe_scatter_combined.pdf`: Scatter plots of inferred DFE shape and scale parameters for small (~20) and large (~100) sample sizes
+  - `dfe_discretized_combined.pdf`: Discretized gamma DFE fits compared to the true simulated discretized gamma DFE. For each sample size, the gamma DFE is discretized for each replicate and then the discrete bins are averaged over replicates to show a single discretized DFE.
+  - 'dfe_pairwise_misid_large.pdf' and 'dfe_pairwise_misid_small.pdf': Pairwise estimates of the joint DFE parameters (mu, sigma, and w) for models inferred with and without an ancestral state misidentification parameter.
   - `dfe_w_boxplot.pdf`: Box plot of the joint DFE mixture model correlation parameter w
