@@ -13,7 +13,7 @@ initialize() {
 	if (exists("Qfactor")){
 		defineConstant("Q", Qfactor);
 	} else{
-		defineConstant("Q", 10);
+		defineConstant("Q", 100);
 	}
 	
 	// proportion of mutations which are perfectly correlated
@@ -105,7 +105,7 @@ initialize() {
 
 // monitor fitness
 1:(asInteger(round(burn*161744.0/Q))) early() {
-	if(community.tick % 100000 == 0) {
+	if(community.tick % 10000 == 0) {
 		print(community.tick);
 		print(mean(p1.cachedFitness(NULL)));
 	}

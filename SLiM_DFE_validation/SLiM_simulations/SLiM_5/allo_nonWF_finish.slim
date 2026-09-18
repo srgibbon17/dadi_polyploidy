@@ -84,10 +84,11 @@ initialize()
 	}
 	
 	// set the seed, pulling in the rep and id to differentiate among runs
-	if (exists("SEED")){
-		setSeed(asInteger(SEED + id * rep));
+   // so this works for arbitrary ranges of id and rep, I am using the Cantor mapping function
+   if (exists("SEED")){
+		setSeed(asInteger(SEED + ((id + rep)*(id + rep + 1))/2 + id));
 	} else{
-		setSeed(asInteger(42 + id * rep));
+		setSeed(asInteger(42 + ((id + rep)*(id + rep + 1))/2 + id));
 	}
 	
 	//set population parameters

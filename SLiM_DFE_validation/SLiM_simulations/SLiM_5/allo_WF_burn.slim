@@ -28,10 +28,12 @@ initialize() {
 	}
 	
 	// set the seed, pulling in the rep and id to differentiate among runs
+   // so this works for arbitrary ranges of id and rep, I am using the Cantor mapping function
+   // the 12321 differentiates this from the final script
 	if (exists("SEED")){
-		setSeed(asInteger(SEED + id * rep + 123));
+		setSeed(asInteger(SEED + ((id + rep)*(id + rep + 1))/2 + id + 12321));
 	} else{
-		setSeed(asInteger(42 + id * rep + 123));
+		setSeed(asInteger(42 + ((id + rep)*(id + rep + 1))/2 + id + 12321));
 	}
 	
 	// diffusion scaled time for diploid progenitor divergence

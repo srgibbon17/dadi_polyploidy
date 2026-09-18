@@ -89,7 +89,7 @@ initialize()
 	if (exists("Qfactor")){
 		defineConstant("Q", Qfactor);
 	} else{
-		defineConstant("Q", 1000);
+		defineConstant("Q", 100);
 	}
 	
 	// proportion of mutations which are perfectly correlated
@@ -107,10 +107,11 @@ initialize()
 	}
 	
 	// set the seed, pulling in the rep and id to differentiate among runs
-	if (exists("SEED")){
-		setSeed(asInteger(SEED + id * rep));
+   // so this works for arbitrary ranges of id and rep, I am using the Cantor mapping function
+   if (exists("SEED")){
+		setSeed(asInteger(SEED + ((id + rep)*(id + rep + 1))/2 + id));
 	} else{
-		setSeed(asInteger(42 + id * rep));
+		setSeed(asInteger(42 + ((id + rep)*(id + rep + 1))/2 + id));
 	}
 	
 	
@@ -386,7 +387,7 @@ late(){
 	
 	// "non-storage" AUTOTETRAPLOID pop; use 's2' for m1 mutations
 	for (ind in p3.individuals){
-		genomes = c(ind.haplosomes,sim.subpopulations[0].individuals[ind.tag].haplosomes);
+		genomes = c(ind.haplosomes,sim.subpopulations[1].individuals[ind.tag].haplosomes);
 		// m1 mutations
 		mutations_m1 = unique(c(genomes.mutationsOfType(m1)));
 		if(size(mutations_m1)==0){
